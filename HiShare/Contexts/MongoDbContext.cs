@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 
 namespace HiShare.Contexts
 {
-    public interface IDbContext<T>
-    {
-
-    }
-
-
-    public class MongoDbContext<T> : IDbContext<T>
+    public class MongoDbContext
     {
         public MongoDbContext(IConfiguration configuration)
         {
@@ -32,6 +26,5 @@ namespace HiShare.Contexts
 
         public IMongoDatabase Database { get; }
         public MongoClient Client { get; }
-
     }
 }

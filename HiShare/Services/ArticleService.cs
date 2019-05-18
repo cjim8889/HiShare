@@ -1,5 +1,6 @@
 ﻿using HiShare.Contexts;
 using HiShare.Models;
+using HiShare.Repositories;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace HiShare.Services
 {
     public class ArticleService
     {
-        private readonly IDbContext<Article> dbContext;
-        public ArticleService(IConfiguration configuration, IDbContext<Article> dbContext)
+        private readonly IRepository repository;
+        public ArticleService(IConfiguration configuration, IRepository repository)
         {
-            this.dbContext = dbContext;
+            this.repository = repository;
         }
 
 
