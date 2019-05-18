@@ -1,4 +1,5 @@
 ﻿using HiShare.Contexts;
+using HiShare.Models;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace HiShare.Services
 {
-    public class DbService
+    public class ArticleService
     {
-        private readonly IDbContext dbContext;
-        public DbService(IConfiguration configuration, IDbContext dbContext)
+        private readonly IDbContext<Article> dbContext;
+        public ArticleService(IConfiguration configuration, IDbContext<Article> dbContext)
         {
             this.dbContext = dbContext;
         }
