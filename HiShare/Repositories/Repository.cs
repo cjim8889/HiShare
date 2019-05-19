@@ -1,4 +1,5 @@
 ﻿using HiShare.Contexts;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace HiShare.Repositories
 {
-    public interface IRepository : IDisposable
+    public interface IRepository
     {
-        void Delete<T>(Expression<Func<T, bool>> expression) where T : class, new();
-        void Delete<T>(T item) where T : class, new();
-        T Single<T>(Expression<Func<T, bool>> expression) where T : class, new();
-        void Add<T>(T item) where T : class, new();
-        void Add<T>(IEnumerable<T> items) where T : class, new();
+        Task DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
+        Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
+        Task<IEnumerable<T>> ManyAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
+        Task AddAsync<T>(T item) where T : class, new();
+        Task AddAsync<T>(IEnumerable<T> items) where T : class, new();
     }
     public class MongoRepository : IRepository
     {
@@ -24,34 +25,29 @@ namespace HiShare.Repositories
         }
 
 
-        public void Add<T>(T item) where T : class, new()
+        public async Task AddAsync<T>(T item) where T : class, new()
         {
-            throw new NotImplementedException();
+            await dbContext.Database.GetCollection<T>(typeof(T).Name).InsertOneAsync(item);
         }
 
-        public void Add<T>(IEnumerable<T> items) where T : class, new()
+        public async Task AddAsync<T>(IEnumerable<T> items) where T : class, new()
         {
-            throw new NotImplementedException();
+            await dbContext.Database.GetCollection<T>(typeof(T).Name).InsertManyAsync(items);
         }
 
-        public void Delete<T>(Expression<Func<T, bool>> expression) where T : class, new()
+        public async Task DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
-            throw new NotImplementedException();
+            await dbContext.Database.GetCollection<T>(typeof(T).Name).DeleteOneAsync(expression);
         }
 
-        public void Delete<T>(T item) where T : class, new()
+        public async Task<IEnumerable<T>> ManyAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
-            throw new NotImplementedException();
+            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).ToListAsync();
         }
 
-        public void Dispose()
+        public async Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
-            throw new NotImplementedException();
-        }
-
-        public T Single<T>(Expression<Func<T, bool>> expression) where T : class, new()
-        {
-            throw new NotImplementedException();
+            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).FirstOrDefaultAsync();
         }
     }
 }

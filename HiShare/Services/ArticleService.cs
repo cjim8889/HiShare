@@ -17,6 +17,10 @@ namespace HiShare.Services
             this.repository = repository;
         }
 
+        public async Task<IEnumerable<Article>> All()
+        {
+            return await repository.ManyAsync<Article>(a => true);
+        }
 
     }
 }

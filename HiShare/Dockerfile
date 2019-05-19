@@ -5,6 +5,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
+RUN apt-get install -y nodejs
+
 COPY ["HiShare/HiShare.csproj", "HiShare/"]
 RUN dotnet restore "HiShare/HiShare.csproj"
 COPY . .

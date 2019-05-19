@@ -10,6 +10,8 @@ services:
       - Db_ConnectionString
     depends_on:
       - mongo
+    ports:
+      - "5000:80"
       
   mongo:
     image: mongo

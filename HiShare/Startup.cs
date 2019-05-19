@@ -1,3 +1,6 @@
+using HiShare.Contexts;
+using HiShare.Repositories;
+using HiShare.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +30,12 @@ namespace HiShare
             {
                 configuration.RootPath = "client-app/build";
             });
+
+
+            services.AddSingleton<MongoDbContext>();
+            services.AddSingleton<IRepository, MongoRepository>();
+
+            services.AddScoped<ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
