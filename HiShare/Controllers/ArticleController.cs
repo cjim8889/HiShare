@@ -23,6 +23,7 @@ namespace HiShare.Controllers
         [HttpGet]
         public async Task<IActionResult> GetArticles()
         {
+            Console.WriteLine("meimaotai");
             return Ok(await article.All());
         }
     }
