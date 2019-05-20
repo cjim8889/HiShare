@@ -1,0 +1,11 @@
+.article-page {
+    display: grid;
+
+    grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
+
+
+}
+
+.article-page > * {
+    grid-column: 3 / 4;
+}
