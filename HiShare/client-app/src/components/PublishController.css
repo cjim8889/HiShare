@@ -1,0 +1,18 @@
+.button-group {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+
+    margin-bottom: 4rem;
+}
+
+.button-group > * {
+    display: block;
+
+    margin-top: 1rem;
+}
+
+.button-group > * > * {
+    margin-right: 1rem;
+    height: max-content;
+}

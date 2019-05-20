@@ -1,0 +1,9 @@
+.publish-page {
+    display: grid;
+
+    grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
+    grid-template-rows: 2fr 1fr;
+}
+.publish-page > * {
+    grid-column: 3 / 4;
+}

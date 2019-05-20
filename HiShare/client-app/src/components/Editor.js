@@ -1,45 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import EditorJs from '@editorjs/editorjs';
-import Header from '@editorjs/header'
+import React from "react";
+import EditorJs from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import SimpleImage from '@editorjs/simple-image'
+import "./Editor.css";
 
-function Editor() {
-    
-    const [editorInstance, setEditorInstance] = useState(null)
+class Editor extends React.Component {
+    constructor(props) {
+        super(props);
 
-    function onC() {
-        console.log("changed")
+        this.editor = null;
+        this.onChange = this.onChange.bind(this);
     }
 
-    useEffect(() => {
-        setEditorInstance(new EditorJs({ 
+    componentDidMount() {
+        let blocks = this.props.blocks
+            ? this.props.blocks
+            : [
+                  {
+                      type: "header",
+                      data: {
+                          text: "标题...",
+                          level: 1
+                      }
+                  },
+                  {
+                      type: "paragraph",
+                      data: {
+                          text: "正文..."
+                      }
+                  }
+              ];
+
+        this.editor = new EditorJs({
             holders: "editorjs",
-            onChange: onC,
+            onChange: this.onChange,
             data: {
-                blocks: [
-                    {
-                        type: "header",
-                        data: {
-                            text: "Editor.js",
-                            level: 2
-                        }
-                    }
-                ]
+                blocks: blocks
             },
             tools: {
                 header: {
                     class: Header,
-                    shortcut: 'CMD+SHIFT+H',
+                    shortcut: "CMD+SHIFT+H"
+                },
+                list: {
+                    class: List,
+                    shortcut: "CMD+SHIFT+L"
+                },
+                image: {
+                    class: SimpleImage,
+                    shortcut: "CMD+I"
                 }
             }
-        }))
+        });
 
-    }, [])
+        this.props.onReady(this.editor);
+    }
 
+    onChange() {
+        this.props.onChange(this.editor);
+    }
 
-
-    return (
-        <div id="editorjs"></div>
-    )
+    render() {
+        return <div id="editorjs" />;
+    }
 }
 
-export default Editor
+export default Editor;

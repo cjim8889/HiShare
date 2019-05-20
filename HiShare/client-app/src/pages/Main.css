@@ -1,0 +1,30 @@
+.main-page {
+    display: grid;
+
+    grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
+    grid-template-rows: 2fr 1fr 4fr 2fr;
+
+    text-align: center;
+}
+
+
+.main-page > * {
+    grid-column: 3 / 4;
+
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+h1 {
+    font-weight: 200;
+}
+
+.main-button-group {
+
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
