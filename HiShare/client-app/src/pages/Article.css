@@ -1,11 +1,122 @@
 .article-page {
     display: grid;
 
-    grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
+    grid-template-columns: 1fr minmax(0px, 5vw) 2fr minmax(0px, 5vw) 1fr;
 
 
 }
 
 .article-page > * {
     grid-column: 3 / 4;
+}
+
+.article-page > h1, h2, h3, h4, h5, h6 {
+
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.article-page > h2, h3, h4, h5, h6 {
+    text-align: left;
+
+
+}
+
+.article-page > h1 {
+    grid-column: 2 / 5;
+
+    text-align: center;
+}
+
+.article-page > figure {
+    grid-column: 2 / 5;
+
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    max-width: 100%;
+
+
+    transition: 400ms;
+}
+
+.publish-time {
+    display: block;
+
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    font-weight: lighter;
+    font-size: medium;
+
+    text-align: center;
+}
+
+figure:hover
+{
+    -webkit-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    transform: scale(1.02);
+}
+
+figure > img {
+    /*display: block;*/
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 100%;
+
+    object-fit: contain;
+}
+
+figure > figcaption {
+    margin-top: 0.2rem;
+
+    display: block;
+
+    text-align: center;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-style: italic;
+    font-weight: lighter;
+
+    font-size: small;
+
+}
+
+
+
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .article-page {
+        grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
+    }
+
+    .article-page > * {
+        grid-column: 2 / 3;
+    }
+
+    .article-page > figure {
+        grid-column: 1 / 4;
+    }
+
+    .article-page > h1 {
+        grid-column: 1 / 4;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .article-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
+    }
+}
+
+@media only screen  and (min-width : 1224px) {
+    .article-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 3fr minmax(0px, 2vw) 1fr;
+    }
 }
