@@ -23,11 +23,6 @@ namespace HiShare.Controllers
             this.recaptcha = recaptcha;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetArticles()
-        {
-            return Ok(await articleService.All());
-        }
 
         [HttpGet("{token}")]
         public async Task<IActionResult> GetArticle(string token)
