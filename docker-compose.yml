@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   hishare:
-    image: ${DOCKER_REGISTRY-}hishare
+    image: jimchen8889/hishare:latest
     build:
       context: .
       dockerfile: HiShare/Dockerfile
