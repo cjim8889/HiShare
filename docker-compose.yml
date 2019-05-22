@@ -8,10 +8,11 @@ services:
       dockerfile: HiShare/Dockerfile
     environment:
       - Db_ConnectionString
+      - Recaptcha_SecretKey
     depends_on:
       - mongo
     ports:
-      - "5000:80"
+      - "5555:80"
       
   mongo:
     image: mongo
@@ -19,3 +20,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db

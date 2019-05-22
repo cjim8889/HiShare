@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 class Api {
-    static apiUrl = "http://localhost:5000";
+    static apiUrl = process.env.REACT_APP_API_URL;
 
     static async NewArticle(article, recaptchaToken) {
         return await axios.post(this.apiUrl + "/api/articles", {...article}, {

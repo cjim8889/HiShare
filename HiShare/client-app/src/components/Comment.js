@@ -26,7 +26,7 @@ function CommentList(props) {
         <div className="comment-list">
             <Separator alignContent="center" className="separator"><Icon iconName="Comment" styles={{root: { fontSize: "3rem"}}}/></Separator>
             <List items={comments} onRenderCell={onRenderCell}/>
-            <CommentInterface onNew={handleNewComment} />
+            <CommentInterface accessToken={props.accessToken} onNew={handleNewComment} />
         </div>
     )
 }

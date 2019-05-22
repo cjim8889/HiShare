@@ -11,7 +11,7 @@ class Article extends React.Component {
         this.state = {
             article: {},
             children: [],
-            token: props.match.params.token,
+            accessToken: props.match.params.token,
             invalidToken: false
         };
 
@@ -22,7 +22,7 @@ class Article extends React.Component {
     }
 
     async componentDidMount() {
-        let response = await Api.GetArticle(this.state.token);
+        let response = await Api.GetArticle(this.state.accessToken);
 
         if (response === null || response === undefined) {
             this.setState({invalidToken: true});
@@ -67,7 +67,7 @@ class Article extends React.Component {
             children.push(doc);
         });
 
-        let comments = <CommentList key="comment" comments={this.state.article.comments} />;
+        let comments = <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments} />;
         children.push(<div key="publish-time" className="publish-time">发表时间:{this.state.article.publishedAt}</div>);
         children.push(comments);
 
