@@ -23,6 +23,15 @@ namespace HiShare
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAny",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                    });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
@@ -34,8 +43,10 @@ namespace HiShare
 
             services.AddSingleton<MongoDbContext>();
             services.AddSingleton<IRepository, MongoRepository>();
+            services.AddSingleton<RecaptchaService>();
 
             services.AddScoped<ArticleService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +63,7 @@ namespace HiShare
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAny");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

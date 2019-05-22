@@ -4,6 +4,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:not(.separator) {
+body > *:not(.separator) {
   font-family: 'Open Sans', 'Microsoft Yahei UI', Verdana, Simsun, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
 }

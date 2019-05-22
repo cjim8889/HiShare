@@ -8,15 +8,14 @@ function PublishController(props) {
     //eslint-disable-next-line
     const [recaptchaInstance, setRecaptchaInstance] = useState(null);
 
-    const siteKey = "6LcW5KEUAAAAALv-3CULoySYrCK1zKmZjOo0MbAM";
 
     function handleRecaptcha(token) {
-        console.log(token);
+        props.handleRecaptcha(token);
     }
 
     return (
         <div className="button-group">
-            <Recaptcha sitekey={siteKey} ref={e => setRecaptchaInstance(e)} className="recaptcha" verifyCallback={handleRecaptcha} />
+            <Recaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY} ref={e => setRecaptchaInstance(e)} className="recaptcha" verifyCallback={handleRecaptcha} />
             <div>
                 <CompoundButton secondaryText="匿名发布文章" primary={true} onClick={props.handlePublish}>
                     发布

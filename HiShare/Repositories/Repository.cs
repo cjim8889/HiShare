@@ -15,6 +15,7 @@ namespace HiShare.Repositories
         Task<IEnumerable<T>> ManyAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
         Task AddAsync<T>(T item) where T : class, new();
         Task AddAsync<T>(IEnumerable<T> items) where T : class, new();
+        Task<bool> UpdateAsync<T>(UpdateDefinition<T> update, FilterDefinition<T> filter) where T : class, new();
     }
     public class MongoRepository : IRepository
     {
@@ -45,6 +46,12 @@ namespace HiShare.Repositories
             return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).ToListAsync();
         }
 
+        public async Task<bool> UpdateAsync<T>(UpdateDefinition<T> update, FilterDefinition<T> filter) where T : class, new()
+        {
+            var updateInfo = await dbContext.Database.GetCollection<T>(typeof(T).Name).UpdateOneAsync(filter, update);
+
+            return updateInfo.IsAcknowledged ? updateInfo.MatchedCount > 0 : false;
+        }
         public async Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
             return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).FirstOrDefaultAsync();
