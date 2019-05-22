@@ -2,12 +2,14 @@ version: '3.4'
 
 services:
   hishare:
-    image: ${DOCKER_REGISTRY-}hishare
+    image: jimchen8889/hishare:latest
     build:
       context: .
       dockerfile: HiShare/Dockerfile
     environment:
       - Db_ConnectionString
+      - REACT_APP_API_URL
+      - REACT_APP_RECAPTCHA_SITEKEY
       - Recaptcha_SecretKey
     depends_on:
       - mongo
