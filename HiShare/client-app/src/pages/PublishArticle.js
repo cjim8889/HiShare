@@ -74,6 +74,7 @@ class PublishArticle extends React.Component {
 
             this.setState({accessToken: response.data.accessToken});
             this.setState({publishedRedirect: true});
+            localStorage.removeItem("blocks");
         } catch (e) {
             this.setState({publishError: true});
         }

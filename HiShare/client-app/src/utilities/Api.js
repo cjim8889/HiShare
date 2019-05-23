@@ -30,13 +30,36 @@ class Api {
     }
 
     static _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    static _MS_PER_HOUR = 1000 * 60 * 60;
+    static _MS_PER_MIN = 1000 * 60;
 
     static dateDiffInDays(a, b) {
+        let difference = b - a;
 
-        const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-        const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+        let result = {
+            days : Math.floor(difference / this._MS_PER_DAY)
+        };
 
-        return Math.floor((utc2 - utc1) / this._MS_PER_DAY);
+        result.hours = Math.floor((difference - result.days * this._MS_PER_DAY) / this._MS_PER_HOUR);
+        result.minutes = Math.floor((difference - result.days * this._MS_PER_DAY - result.hours * this._MS_PER_HOUR) / this._MS_PER_MIN);
+
+        return result;
+    }
+
+    static durationFromNowString(date) {
+        let result = this.dateDiffInDays(date, new Date());
+
+        if (result.days < 0) {
+            return "现在";
+        } else if (result.days) {
+            return `${result.days}日前`;
+        } else if(result.hours) {
+            return `${result.hours}小时前`;
+        } else if(result.minutes) {
+            return `${result.minutes}分钟前`;
+        } else {
+            return "现在";
+        }
     }
 
 }

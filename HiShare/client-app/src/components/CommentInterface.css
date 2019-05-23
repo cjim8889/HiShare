@@ -1,20 +1,8 @@
-.comment-interface {
-
-    padding-left: 2rem;
-    padding-right: 2rem;
-
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
-
 .comment-interface > * {
-    margin-top: 1rem;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 
-    .comment-interface {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
 }

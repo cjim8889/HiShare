@@ -4,20 +4,16 @@ import "./PublishedDate.css";
 
 function PublishedDate(props) {
 
-    const [publishedDate, setPublishedDate] = useState(props.date);
-    const [result, setResult] = useState({});
+    const [publishedDate, ] = useState(props.date);
+    const [result, setResult] = useState("");
+
     useEffect(() => {
-
-        let dayDiff = Api.dateDiffInDays(new Date(publishedDate), new Date());
-
-        setResult({...result, day: dayDiff});
-
-
-    }, []);
+        setResult(Api.durationFromNowString(new Date(publishedDate)));
+    }, [publishedDate]);
 
     return (
         <div className={`${props.className ? props.className : ""} publish-time`}>
-            发布于 {result.day}日前
+            发布于{result}
         </div>
     )
 }

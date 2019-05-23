@@ -40,21 +40,11 @@
 
     margin-bottom: 20vh;
 
-
-    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-    /*border-radius: 1px;*/
 }
 
 .comment-list > * {
     margin-top: 0;
-    margin-bottom: 2rem;
-}
-
-.comment-list:hover {
-
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 1rem;
 }
 
 

@@ -13,7 +13,10 @@
     margin-bottom: 1rem;
 }
 
-.article-page > h1, h2, h3, h4, h5, h6 {
+.article-page > h1 {
+
+    grid-column: 2 / 5;
+    text-align: center;
 
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
@@ -23,11 +26,6 @@
     text-align: left;
 }
 
-.article-page > h1 {
-    grid-column: 2 / 5;
-
-    text-align: center;
-}
 
 .article-page > figure {
     grid-column: 2 / 5;

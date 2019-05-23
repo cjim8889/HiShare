@@ -26,8 +26,9 @@ function CommentInterface(props) {
         let response = await Api.InsertComment(comment, props.accessToken, recaptchaToken);
 
         recaptchaInstance.reset();
-
-        props.onNew(response.data);
+        setTimeout(() => {
+            props.onNew(response.data);
+        }, 200);
     }
 
     function handleTextChange(e, value) {
