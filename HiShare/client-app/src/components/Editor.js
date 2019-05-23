@@ -2,7 +2,7 @@ import React from "react";
 import EditorJs from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import {Image} from "../plugins/Image";
+import SimpleImage from "@editorjs/simple-image";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -49,8 +49,8 @@ class Editor extends React.Component {
                     shortcut: "CMD+SHIFT+L"
                 },
                 image: {
-                    class: Image,
-                    shortcut: "CMD+I"
+                    class: SimpleImage,
+                    shortcut: "CMD+SHIFT+I"
                 }
             }
         });
