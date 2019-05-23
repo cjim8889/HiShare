@@ -18,3 +18,7 @@ HiShare, Anyone can share
 * Recaptcha_SecretKey Recaptcha的Secretkey
 
 docker-compose文件默认启动两个container 一个服务端和一个MongoDb
+```bash
+docker-compose build
+docker-compose up
+```
