@@ -8,6 +8,9 @@
 
 .article-page > * {
     grid-column: 3 / 4;
+
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
 .article-page > h1, h2, h3, h4, h5, h6 {
@@ -18,8 +21,6 @@
 
 .article-page > h2, h3, h4, h5, h6 {
     text-align: left;
-
-
 }
 
 .article-page > h1 {
@@ -40,18 +41,6 @@
 
 
     transition: 400ms;
-}
-
-.publish-time {
-    display: block;
-
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-
-    font-weight: lighter;
-    font-size: medium;
-
-    text-align: center;
 }
 
 figure:hover
@@ -109,7 +98,14 @@ figure > figcaption {
     }
 }
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+@media only screen and (min-device-width : 480px) and (max-device-width : 768px) {
+    .article-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 5fr minmax(0px, 2vw) 1fr;
+    }
+
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1224px) {
     .article-page {
         grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
     }
@@ -117,6 +113,6 @@ figure > figcaption {
 
 @media only screen  and (min-width : 1224px) {
     .article-page {
-        grid-template-columns: 1fr minmax(0px, 2vw) 3fr minmax(0px, 2vw) 1fr;
+        grid-template-columns: 1fr minmax(0px, 2vw) 2fr minmax(0px, 2vw) 1fr;
     }
 }

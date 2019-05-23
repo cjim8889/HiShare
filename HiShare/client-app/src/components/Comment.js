@@ -4,6 +4,18 @@ import { Separator } from 'office-ui-fabric-react/lib/Separator';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import CommentInterface from '../components/CommentInterface';
 import "./Comment.css";
+import PublishedDate from "../components/PublishedDate";
+
+function CommentItem(props) {
+    return (
+        <div className="comment-item" key={props.item.id} id={props.item.id}>
+            <a className="comment-id" href={"#" + props.item.id}>#{props.item.id.substr(0, 6)}</a>
+            <PublishedDate className="comment-publishDate" date={props.item.publishedAt}/>
+            <p className="comment-content">{props.item.content}</p>
+            <Separator className="comment-separator" alignContent="center" />
+        </div>
+    )
+}
 
 function CommentList(props) {
 
@@ -11,11 +23,7 @@ function CommentList(props) {
 
     function onRenderCell(items, index) {
         return (
-            <div className="comment-item" key={items.id} id={items.id}>
-                <a href={"#" + items.id}>#{items.id}</a>
-                <p>{items.content}</p>
-                <Separator alignContent="center" />
-            </div>
+            <CommentItem item={items}/>
         )
     }
 

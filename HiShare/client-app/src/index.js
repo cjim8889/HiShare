@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import { initializeIcons } from '@uifabric/icons';
 // import { loadRecaptchaScript } from './components/Recaptcha';
 
-// loadRecaptchaScript("6LfR5qQUAAAAAGgrVEcyHL1ED4RRsDL6awSSy8fr");
 initializeIcons();
 ReactDOM.render(<App />, document.getElementById('root'));
 

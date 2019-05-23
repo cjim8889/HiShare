@@ -1,8 +1,10 @@
 import React from "react";
 import CommentList from "../components/Comment";
+import PublishedDate from "../components/PublishedDate";
 import "./Article.css";
 import { Redirect } from "react-router-dom";
 import Api from "../utilities/Api";
+import DOMPurify from "dompurify";
 
 class Article extends React.Component {
     constructor(props) {
@@ -39,7 +41,12 @@ class Article extends React.Component {
 
         let key = 1;
         this.state.article.content.forEach((block) => {
-            let doc;
+            let purifiedText, doc;
+
+            if (block.data.text) {
+                purifiedText = DOMPurify.sanitize(block.data.text);
+            }
+
             if (block.type === "header") {
 
                 doc = React.createElement(`h${block.data.level}`, {
@@ -48,7 +55,7 @@ class Article extends React.Component {
 
             } else if (block.type === "paragraph") {
 
-                doc = <p key={key.toString()}>{block.data.text}</p>;
+                doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
 
             } else if (block.type === "image") {
 
@@ -68,7 +75,7 @@ class Article extends React.Component {
         });
 
         let comments = <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments} />;
-        children.push(<div key="publish-time" className="publish-time">发表时间:{this.state.article.publishedAt}</div>);
+        children.push(<PublishedDate key="published-date" date={this.state.article.publishedAt} />);
         children.push(comments);
 
 

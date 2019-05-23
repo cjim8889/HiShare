@@ -11,6 +11,7 @@
     "@uifabric/fluent-theme": "^0.16.9",
     "@uifabric/icons": "^6.5.2",
     "axios": "^0.18.0",
+    "dompurify": "^1.0.10",
     "office-ui-fabric-react": "^6.183.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
