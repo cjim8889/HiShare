@@ -22,3 +22,6 @@ docker-compose文件默认启动两个container 一个服务端和一个MongoDb
 docker-compose build
 docker-compose up
 ```
+
+# Known Issues
+* 编辑器图片功能UI bug
