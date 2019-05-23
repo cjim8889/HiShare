@@ -12,4 +12,9 @@ HiShare, Anyone can share
 * 改进交互逻辑
 
 # Build Process
-TODO
+至少需要两个ENV
+
+* REACT_APP_RECAPTCHA_SITEKEY Recaptcha的Sitekey
+* Recaptcha_SecretKey Recaptcha的Secretkey
+
+docker-compose文件默认启动两个container 一个服务端和一个MongoDb

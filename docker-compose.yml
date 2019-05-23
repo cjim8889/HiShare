@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: HiShare/Dockerfile
     environment:
-      - Db_ConnectionString
       - REACT_APP_API_URL
       - REACT_APP_RECAPTCHA_SITEKEY
       - Recaptcha_SecretKey
