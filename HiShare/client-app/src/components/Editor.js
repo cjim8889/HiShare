@@ -2,7 +2,7 @@ import React from "react";
 import EditorJs from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import SimpleImage from '@editorjs/simple-image'
+import {Image} from "../plugins/Image";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -33,6 +33,7 @@ class Editor extends React.Component {
               ];
 
         this.editor = new EditorJs({
+            autofocus: true,
             holders: "editorjs",
             onChange: this.onChange,
             data: {
@@ -48,13 +49,29 @@ class Editor extends React.Component {
                     shortcut: "CMD+SHIFT+L"
                 },
                 image: {
-                    class: SimpleImage,
+                    class: Image,
                     shortcut: "CMD+I"
                 }
             }
         });
 
         this.props.onReady(this.editor);
+    }
+
+    //TODO: Implement this function
+    handleUploadByFile(file) {
+        return {
+            success: 0
+        }
+    }
+
+    handleUploadByUrl(url) {
+        return {
+            success: 1,
+            file: {
+                url: url
+            }
+        }
     }
 
     onChange() {

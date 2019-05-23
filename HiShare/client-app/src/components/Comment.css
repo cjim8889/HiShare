@@ -25,6 +25,8 @@
 .comment-item > .comment-publishDate {
     grid-row: 1 / 2;
     grid-column: 3 / 4;
+
+    text-align: right;
 }
 
 

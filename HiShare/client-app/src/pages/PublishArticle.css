@@ -7,3 +7,33 @@
 .publish-page > * {
     grid-column: 3 / 4;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .publish-page {
+        grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
+    }
+
+    .publish-page > * {
+        grid-column: 2 / 3;
+    }
+}
+
+
+@media only screen and (min-device-width : 480px) and (max-device-width : 768px) {
+    .publish-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 5fr minmax(0px, 2vw) 1fr;
+    }
+
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1224px) {
+    .publish-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
+    }
+}
+
+@media only screen  and (min-width : 1224px) {
+    .publish-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 2fr minmax(0px, 2vw) 1fr;
+    }
+}
