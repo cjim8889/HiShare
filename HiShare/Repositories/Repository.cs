@@ -18,8 +18,6 @@ namespace HiShare.Repositories
         Task<bool> UpdateAsync<T>(UpdateDefinition<T> update, FilterDefinition<T> filter) where T : class, new();
         Task<IEnumerable<T>> ManyLimitAsync<T>(Expression<Func<T, bool>> expression, int limit, int skip) where T : class, new();
         Task<IEnumerable<T>> ManyLimitSortAsync<T>(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sortExpression, int limit, int skip) where T : class, new();
-
-
     }
     public class MongoRepository : IRepository
     {

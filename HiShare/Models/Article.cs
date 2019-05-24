@@ -36,6 +36,22 @@ namespace HiShare.Models
         public int DownVote { get; set; }
     }
 
+    public class ArticleDTO
+    {
+        public ArticleDTO(Article article)
+        {
+            AccessToken = article.AccessToken;
+            PublishedAt = article.PublishedAt;
+            CommentsCount = article.Comments.Count;
+            Title = article.Title;
+        }
+
+        public string AccessToken { get; set; }
+        public DateTime PublishedAt { get; set; }
+        public int CommentsCount { get; set; }
+        public string Title { get; set; }
+    }
+
     public class Article
     {
         public Article()

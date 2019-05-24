@@ -50,7 +50,9 @@ namespace HiShare.Controllers
                 result = await articleService.GetLatestPublicArticles(30, 0);
             }
 
-            return Ok(result);
+            var ret = result.Select(x => new ArticleDTO(x)).ToList();
+
+            return Ok(ret);
         }
 
         [HttpPost]
