@@ -68,7 +68,7 @@ namespace HiShare.Repositories
 
         public async Task<IEnumerable<T>> ManyLimitSortAsync<T>(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sortExpression, int limit, int skip) where T : class, new()
         {
-            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).SortBy(sortExpression).Skip(skip).Limit(limit).ToListAsync();
+            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).SortByDescending(sortExpression).Skip(skip).Limit(limit).ToListAsync();
         }
     }
 }
