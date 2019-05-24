@@ -27,7 +27,7 @@ class Article extends React.Component {
     }
 
 
-    async componentDidMount() {
+    async componentWillMount() {
         let response = await Api.GetArticle(this.state.accessToken);
 
         if (response === null || response === undefined) {
@@ -41,6 +41,7 @@ class Article extends React.Component {
             })
         }
     }
+
 
     composeContent() {
         const children = [];
@@ -79,7 +80,6 @@ class Article extends React.Component {
                     </figure>;
 
                 } else if (block.type === "code") {
-                    console.log(block);
                     doc = (
                         <pre key={key.toString()}>
                             <code dangerouslySetInnerHTML={{__html: block.data.code}}></code>
@@ -96,6 +96,7 @@ class Article extends React.Component {
         let comments = <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments} />;
         children.push(<PublishedDate key="published-date" date={this.state.article.publishedAt} />);
         children.push(comments);
+
 
         return children;
     }
