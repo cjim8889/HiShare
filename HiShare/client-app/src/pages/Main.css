@@ -2,7 +2,6 @@
     display: grid;
 
     grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
-    grid-template-rows: 2fr 1fr 4fr 2fr;
 
     text-align: center;
 
@@ -12,12 +11,19 @@
 .main-page > * {
     grid-column: 3 / 4;
 
-    margin-block-start: 1em;
-    margin-block-end: 1em;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.main-page > *:not(.postlist-wrapper) {
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
 }
 
 h1 {
-    font-weight: 200;
+    font-weight: lighter;
 }
 
 .main-button-group {
@@ -29,3 +35,32 @@ h1 {
     text-align: center;
 }
 
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .main-page {
+        grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
+    }
+
+    .main-page > * {
+        grid-column: 2 / 3;
+    }
+}
+
+@media only screen and (min-device-width : 480px) and (max-device-width : 768px) {
+    .main-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 5fr minmax(0px, 2vw) 1fr;
+    }
+
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1224px) {
+    .main-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
+    }
+}
+
+@media only screen  and (min-width : 1224px) {
+    .main-page {
+        grid-template-columns: 1fr minmax(0px, 2vw) 2fr minmax(0px, 2vw) 1fr;
+    }
+}

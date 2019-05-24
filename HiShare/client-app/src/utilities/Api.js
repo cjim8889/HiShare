@@ -21,6 +21,19 @@ class Api {
             return null;
         }
     }
+
+    static async GetPublicArticles(offset) {
+        try {
+            return await axios.get(this.apiUrl + "/api/articles", {
+                params: {
+                    offset: offset
+                }
+            });
+        } catch (e) {
+            console.log("Error loading articles");
+            return [];
+        }
+    }
     
     static async InsertComment(comment, accessToken, recaptchaToken) {
         return await axios.post(this.apiUrl + "/api/articles/" + accessToken + "/comment", {...comment}, {

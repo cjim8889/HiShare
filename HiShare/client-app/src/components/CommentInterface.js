@@ -40,7 +40,13 @@ function CommentInterface(props) {
         <div className="comment-interface">
             <h2>评论</h2>
             <TextField label="正文" multiline resizable={true} rows={4} onChange={handleTextChange} />
-            <Recaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY} ref={e => setRecaptchaInstance(e)} className="recaptcha" verifyCallback={handleRecaptcha} />
+            <Recaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
+                       ref={e => setRecaptchaInstance(e)}
+                       className="recaptcha"
+                       verifyCallback={handleRecaptcha}
+                       render="explicit"
+                       onloadCallback={() => console.log('loaded')}
+            />
             <PrimaryButton
                 text="提交"
                 onClick={handleSubmission}

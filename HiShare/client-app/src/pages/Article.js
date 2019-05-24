@@ -21,6 +21,8 @@ class Article extends React.Component {
         this.rootNode = React.createRef();
 
         this.composeContent = this.composeContent.bind(this);
+
+        console.log(this.state);
     }
 
     async componentDidMount() {

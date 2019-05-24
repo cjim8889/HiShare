@@ -15,7 +15,7 @@ function App() {
             <Switch>
                 <Route path="/" exact component={Main} />
                 <Route path="/articles/new" component={PublishArticle}/>
-                <Route path="/articles/:token" component={Article} />
+                <Route path="/articles/:token" exact component={Article} />
                 <Route path="/404" component={NotFound} />
                 <Route component={NotFound} />
             </Switch>
