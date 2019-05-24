@@ -3,6 +3,7 @@
 
     justify-items: left;
 
+    margin-top: 0;
     margin-bottom: 1rem;
 }
 
@@ -10,8 +11,8 @@
 
     display: block;
 
-    margin-top: 0;
-    margin-bottom: 1rem;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
 }
 
 .command-group {

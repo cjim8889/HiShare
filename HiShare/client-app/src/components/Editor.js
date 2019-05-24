@@ -2,8 +2,9 @@ import React from "react";
 import EditorJs from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import SimpleImage from "@editorjs/simple-image";
+import ImageTool from '@editorjs/image';
 import "./Editor.css";
+import Api from "../utilities/Api";
 
 class Editor extends React.Component {
     constructor(props) {
@@ -49,7 +50,13 @@ class Editor extends React.Component {
                     shortcut: "CMD+SHIFT+L"
                 },
                 image: {
-                    class: SimpleImage,
+                    class: ImageTool,
+                    config: {
+                        uploader: {
+                            uploadByFile: Api.UploadImageByFile,
+                            uploadByUrl: Api.UploadImageByUrl
+                        }
+                    },
                     shortcut: "CMD+SHIFT+I"
                 }
             }
@@ -57,22 +64,7 @@ class Editor extends React.Component {
 
         this.props.onReady(this.editor);
     }
-
-    //TODO: Implement this function
-    handleUploadByFile(file) {
-        return {
-            success: 0
-        }
-    }
-
-    handleUploadByUrl(url) {
-        return {
-            success: 1,
-            file: {
-                url: url
-            }
-        }
-    }
+    
 
     onChange() {
         this.props.onChange(this.editor);

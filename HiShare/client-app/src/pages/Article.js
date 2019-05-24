@@ -63,7 +63,7 @@ class Article extends React.Component {
             } else if (block.type === "image") {
 
                 doc = <figure key={key.toString()}>
-                    <img src={block.data.url} alt="" />
+                    <img src={block.data.file.url} alt={block.data.caption ? block.data.caption : "HiShare"} />
                     {
                         block.data.caption ?
                             <figcaption>{block.data.caption}</figcaption>

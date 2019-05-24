@@ -4,6 +4,7 @@ import axios from 'axios';
 
 class Api {
     static apiUrl = process.env.REACT_APP_API_URL === undefined || process.env.REACT_APP_API_URL === null ? process.env.PUBLIC_URL : process.env.REACT_APP_API_URL;
+    static imageUploadUrl = "https://sm.ms/api/upload?inajax=1";
 
     static async NewArticle(article, recaptchaToken) {
         return await axios.post(this.apiUrl + "/api/articles", {...article}, {
@@ -59,6 +60,43 @@ class Api {
             return `${result.minutes}分钟前`;
         } else {
             return "现在";
+        }
+    }
+
+    static async UploadImageByFile(file) {
+
+        const data = new FormData();
+
+        data.append("smfile", file);
+
+        let response = await fetch("https://sm.ms/api/upload?inajax=1", {
+            method: 'POST',
+            mode: 'cors',
+            body: data
+        });
+
+        let json = await response.json();
+
+        if (!json.error){
+            return {
+                success: 1,
+                file: {
+                    url: json.data.url
+                }
+            }
+        } else {
+            return {
+                success: 0
+            }
+        }
+    }
+
+    static async UploadImageByUrl(url) {
+        return {
+            success: 1,
+            file: {
+                url: url
+            }
         }
     }
 
