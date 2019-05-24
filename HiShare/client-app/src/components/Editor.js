@@ -3,6 +3,9 @@ import EditorJs from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from '@editorjs/image';
+import Marker from '@editorjs/marker';
+import InlineCode from '@editorjs/inline-code';
+import CodeTool from '@editorjs/code';
 import "./Editor.css";
 import Api from "../utilities/Api";
 
@@ -58,6 +61,18 @@ class Editor extends React.Component {
                         }
                     },
                     shortcut: "CMD+SHIFT+I"
+                },
+                marker: {
+                    class: Marker,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+C',
+                },
+                code: {
+                    class: CodeTool,
+                    shortcut: 'CMD+SHIFT+X',
                 }
             }
         });

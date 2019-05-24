@@ -5,6 +5,8 @@ import "./Article.css";
 import { Redirect } from "react-router-dom";
 import Api from "../utilities/Api";
 import DOMPurify from "dompurify";
+import loadCodeHighlighting from "../utilities/CodeHighlighting";
+import "../utilities/CodeHighlighting.css"
 
 class Article extends React.Component {
     constructor(props) {
@@ -24,6 +26,7 @@ class Article extends React.Component {
 
     }
 
+
     async componentDidMount() {
         let response = await Api.GetArticle(this.state.accessToken);
 
@@ -32,7 +35,9 @@ class Article extends React.Component {
         } else {
             let article = {...response.data, content: JSON.parse(response.data.content)};
             this.setState({article: article}, () => {
-                this.setState({children: this.composeContent()});
+                this.setState({children: this.composeContent()}, () => {
+                    loadCodeHighlighting();
+                });
             })
         }
     }
@@ -73,7 +78,15 @@ class Article extends React.Component {
                         }
                     </figure>;
 
+                } else if (block.type === "code") {
+                    console.log(block);
+                    doc = (
+                        <pre key={key.toString()}>
+                            <code dangerouslySetInnerHTML={{__html: block.data.code}}></code>
+                        </pre>
+                    );
                 }
+
 
                 key += 1;
                 children.push(doc);
@@ -84,9 +97,9 @@ class Article extends React.Component {
         children.push(<PublishedDate key="published-date" date={this.state.article.publishedAt} />);
         children.push(comments);
 
-
         return children;
     }
+
     render() {
         return (
             <div className="article-page" ref={this.rootNode} >
