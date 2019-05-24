@@ -24,4 +24,4 @@ docker-compose up
 ```
 
 # Known Issues
-* 编辑器图片功能UI bug
+* <s>编辑器图片功能UI bug</s>
