@@ -22,7 +22,6 @@ class Article extends React.Component {
 
         this.composeContent = this.composeContent.bind(this);
 
-        console.log(this.state);
     }
 
     async componentDidMount() {
@@ -42,42 +41,44 @@ class Article extends React.Component {
         const children = [];
 
         let key = 1;
-        this.state.article.content.forEach((block) => {
-            let purifiedText, doc;
+        if (this.state.article.content != null) {
+            this.state.article.content.forEach((block) => {
+                let purifiedText, doc;
 
-            if (block.data.text) {
-                purifiedText = DOMPurify.sanitize(block.data.text);
-            }
+                if (block.data.text) {
+                    purifiedText = DOMPurify.sanitize(block.data.text);
+                }
 
-            if (block.type === "header") {
+                if (block.type === "header") {
 
-                doc = React.createElement(`h${block.data.level}`, {
-                    key: key,
-                    dangerouslySetInnerHTML: {
-                        __html: purifiedText
-                    }
-                });
+                    doc = React.createElement(`h${block.data.level}`, {
+                        key: key,
+                        dangerouslySetInnerHTML: {
+                            __html: purifiedText
+                        }
+                    });
 
-            } else if (block.type === "paragraph") {
+                } else if (block.type === "paragraph") {
 
-                doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
+                    doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
 
-            } else if (block.type === "image") {
+                } else if (block.type === "image") {
 
-                doc = <figure key={key.toString()}>
-                    <img src={block.data.file.url} alt={block.data.caption ? block.data.caption : "HiShare"} />
-                    {
-                        block.data.caption ?
-                            <figcaption>{block.data.caption}</figcaption>
-                            : null
-                    }
-                </figure>;
+                    doc = <figure key={key.toString()}>
+                        <img src={block.data.file.url} alt={block.data.caption ? block.data.caption : "HiShare"} />
+                        {
+                            block.data.caption ?
+                                <figcaption>{block.data.caption}</figcaption>
+                                : null
+                        }
+                    </figure>;
 
-            }
+                }
 
-            key += 1;
-            children.push(doc);
-        });
+                key += 1;
+                children.push(doc);
+            });
+        }
 
         let comments = <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments} />;
         children.push(<PublishedDate key="published-date" date={this.state.article.publishedAt} />);

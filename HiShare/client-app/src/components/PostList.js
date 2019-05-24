@@ -7,10 +7,9 @@ import PublishedDate from "../components/PublishedDate";
 import {Icon} from "office-ui-fabric-react";
 
 function PostItem(props) {
-    console.log(props.article);
     return (
         <div className="post-item">
-            <Link to={`/articles/${props.article.accessToken}`}><h2>{props.article.title}</h2></Link>
+            <div className="post-title"><Link to={`/articles/${props.article.accessToken}`}>{props.article.title.length > 30 ? props.article.title.substr(0, 27) + "..." : props.article.title }</Link></div>
             <PublishedDate className="post-published-date" date={props.article.publishedAt} />
             <div className="post-item-count">评论数:{props.article.commentsCount}</div>
             <Separator className="post-separator" alignContent="center" />

@@ -63,11 +63,10 @@ namespace HiShare.Controllers
                 return BadRequest();
             }
 
-            if (article.IsPublic && string.IsNullOrWhiteSpace(article.Title))
+            if (article.IsPublic && string.IsNullOrWhiteSpace(article.Title) || string.IsNullOrWhiteSpace(article.Content) || article.Content.Length < 10)
             {
                 return BadRequest();
             }
-
 
             await articleService.New(article);
             return CreatedAtAction("CreateArticle", article);

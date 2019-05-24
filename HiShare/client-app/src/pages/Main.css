@@ -1,7 +1,7 @@
 .main-page {
     display: grid;
 
-    grid-template-columns: 1fr 5vw 2fr 5vw 1fr;
+    grid-template-columns: 1fr minmax(0, 5vw) 2fr minmax(0, 5vw) 1fr;
 
     text-align: center;
 
@@ -36,7 +36,7 @@ h1 {
 }
 
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-width : 320px) and (max-width : 480px) {
     .main-page {
         grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
     }
@@ -46,21 +46,21 @@ h1 {
     }
 }
 
-@media only screen and (min-device-width : 480px) and (max-device-width : 768px) {
+@media only screen and (min-width : 480px) and (max-width : 768px) {
     .main-page {
         grid-template-columns: 1fr minmax(0px, 2vw) 5fr minmax(0px, 2vw) 1fr;
     }
 
 }
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1224px) {
+@media only screen and (min-width : 768px) and (max-width : 1224px) {
     .main-page {
         grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
     }
 }
 
-@media only screen  and (min-width : 1224px) {
+@media only screen  and (min-width : 1224px) and (max-width: 1448px){
     .main-page {
-        grid-template-columns: 1fr minmax(0px, 2vw) 2fr minmax(0px, 2vw) 1fr;
+        grid-template-columns: 1fr minmax(0px, 4vw) 3fr minmax(0px, 4vw) 1fr;
     }
 }

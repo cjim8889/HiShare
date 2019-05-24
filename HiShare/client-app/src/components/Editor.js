@@ -21,14 +21,14 @@ class Editor extends React.Component {
                   {
                       type: "header",
                       data: {
-                          text: "标题...",
+                          text: "你好世界...",
                           level: 1
                       }
                   },
                   {
                       type: "paragraph",
                       data: {
-                          text: "正文..."
+                          text: "..."
                       }
                   }
               ];

@@ -24,8 +24,13 @@ function PublishController(props) {
     }
 
     function handlePublish() {
-        if (!title && isPublic) {
+        if (isPublic && !title) {
             settE("公开文章标题不得为空");
+            return;
+        }
+
+        if (isPublic && title.length > 40) {
+            settE("文章标题不得大于40字");
             return;
         }
 
@@ -66,7 +71,7 @@ function PublishController(props) {
                     </div>
                 }
                 onText="公开"
-                offText="隐藏"
+                offText="私密"
                 onChange={handleToggle}
             />
             {
