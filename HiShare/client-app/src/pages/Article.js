@@ -50,8 +50,11 @@ class Article extends React.Component {
             if (block.type === "header") {
 
                 doc = React.createElement(`h${block.data.level}`, {
-                    key: key
-                }, block.data.text);
+                    key: key,
+                    dangerouslySetInnerHTML: {
+                        __html: purifiedText
+                    }
+                });
 
             } else if (block.type === "paragraph") {
 
