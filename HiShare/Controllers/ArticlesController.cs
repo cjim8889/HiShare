@@ -36,10 +36,32 @@ namespace HiShare.Controllers
             return Ok(article);
         }
 
+        [HttpGet]
+        //Return the latest 30 public articles as default when there is not an offset
+        public async Task<IActionResult> GetPublicArticles([FromQuery]int? offset)
+        {
+            IEnumerable<Article> result;
+            if (offset.HasValue)
+            {
+                result = await articleService.GetLatestPublicArticles(30, offset.Value);
+            }
+            else
+            {
+                result = await articleService.GetLatestPublicArticles(30, 0);
+            }
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateArticle([FromBody]Article article, [FromQuery(Name = "t")]string token)
         {
             if (!await recaptcha.Authenticate(token))
+            {
+                return BadRequest();
+            }
+
+            if (article.IsPublic && string.IsNullOrWhiteSpace(article.Title))
             {
                 return BadRequest();
             }

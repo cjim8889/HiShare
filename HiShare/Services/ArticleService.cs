@@ -59,5 +59,14 @@ namespace HiShare.Services
             return token;
         }
 
+        public async Task<IEnumerable<Article>> GetLatestPublicArticles(int? limit, int? skip)
+        {
+            return await repository.ManyLimitSortAsync<Article>(
+                x => x.IsPublic,
+                x => x.PublishedAt,
+                limit.HasValue ? limit.Value : 30,
+                skip.HasValue ? skip.Value : 0
+                );
+        }
     }
 }

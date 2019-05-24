@@ -72,5 +72,8 @@ namespace HiShare.Models
 
         [BsonElement("Content")]
         public string Content { get; set; }
+
+        [BsonElement("Title")]
+        public string Title { get; set; }
     }
 }

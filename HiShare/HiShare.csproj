@@ -43,7 +43,7 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="REACT_APP_RECAPTCHA_SITEKEY=$(REACT_APP_RECAPTCHA_SITEKEY) REACT_APP_API_URL=$(REACT_APP_API_URL) npm run build" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
@@ -54,5 +54,4 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
-
 </Project>

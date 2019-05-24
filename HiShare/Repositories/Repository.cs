@@ -16,6 +16,10 @@ namespace HiShare.Repositories
         Task AddAsync<T>(T item) where T : class, new();
         Task AddAsync<T>(IEnumerable<T> items) where T : class, new();
         Task<bool> UpdateAsync<T>(UpdateDefinition<T> update, FilterDefinition<T> filter) where T : class, new();
+        Task<IEnumerable<T>> ManyLimitAsync<T>(Expression<Func<T, bool>> expression, int limit, int skip) where T : class, new();
+        Task<IEnumerable<T>> ManyLimitSortAsync<T>(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sortExpression, int limit, int skip) where T : class, new();
+
+
     }
     public class MongoRepository : IRepository
     {
@@ -55,6 +59,16 @@ namespace HiShare.Repositories
         public async Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
             return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<T>> ManyLimitAsync<T>(Expression<Func<T, bool>> expression, int limit, int skip) where T : class, new()
+        {
+            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).Skip(skip).Limit(limit).ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> ManyLimitSortAsync<T>(Expression<Func<T, bool>> expression, Expression<Func<T, object>> sortExpression, int limit, int skip) where T : class, new()
+        {
+            return await dbContext.Database.GetCollection<T>(typeof(T).Name).Find(expression).SortBy(sortExpression).Skip(skip).Limit(limit).ToListAsync();
         }
     }
 }
