@@ -1,18 +1,31 @@
 .button-group {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-
-    margin-bottom: 4rem;
-}
-
-.button-group > * {
     display: block;
+
+    justify-items: left;
 
     margin-bottom: 1rem;
 }
 
-.button-group > * > * {
+.button-group > * {
+
+    display: block;
+
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.command-group {
+    display: block;
+}
+
+.command-group > *:first-child {
     margin-right: 1rem;
-    height: max-content;
+}
+
+.ce-block__content {
+    margin: 0 !important;
+}
+
+.ce-toolbar__content {
+    margin: 0 !important;
 }

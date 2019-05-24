@@ -63,10 +63,10 @@ class PublishArticle extends React.Component {
         this.setState({editorInstance: editor});
     }
 
-    async handlePublish() {
+    async handlePublish(isPublic) {
         let article = {
             content: JSON.stringify(this.state.blocks),
-            isPublic: true
+            isPublic: isPublic
         };
 
         try {
