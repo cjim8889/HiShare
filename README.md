@@ -14,14 +14,25 @@ HiShare, Anyone can share
 # Build Process
 至少需要两个ENV
 
-* REACT_APP_RECAPTCHA_SITEKEY Recaptcha的Sitekey
-* Recaptcha_SecretKey Recaptcha的Secretkey
+前后端Build分离
 
-docker-compose文件默认启动两个container 一个服务端和一个MongoDb
+## 后端Build
+ENV
+* Recaptcha_SecretKey Recaptcha的Secretkey
 ```bash
 docker-compose build
-docker-compose up
 ```
+
+## 前端Build
+```
+cd client-app
+REACT_APP_RECAPTCHA_SITEKEY=你的Key npm run build
+```
+
+
 
 # Known Issues
 * <s>编辑器图片功能UI bug</s>
+
+# Todo
+* 敬请期待
