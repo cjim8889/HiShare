@@ -74,7 +74,9 @@ figure > figcaption {
     font-size: small;
 
 }
-
+.code-block {
+    font-size: 1rem;
+}
 .inline-code {
     background: rgba(251,241,241,0.78);
     color: #C44545;

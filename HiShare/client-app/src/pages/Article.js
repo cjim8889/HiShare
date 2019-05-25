@@ -5,8 +5,8 @@ import "./Article.css";
 import { Redirect } from "react-router-dom";
 import Api from "../utilities/Api";
 import DOMPurify from "dompurify";
-import loadCodeHighlighting from "../utilities/CodeHighlighting";
-import "../utilities/CodeHighlighting.css"
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 class Article extends React.Component {
     constructor(props) {
@@ -36,7 +36,6 @@ class Article extends React.Component {
             let article = {...response.data, content: JSON.parse(response.data.content)};
             this.setState({article: article}, () => {
                 this.setState({children: this.composeContent()}, () => {
-                    loadCodeHighlighting();
                 });
             })
         }
@@ -81,9 +80,7 @@ class Article extends React.Component {
 
                 } else if (block.type === "code") {
                     doc = (
-                        <pre key={key.toString()}>
-                            <code dangerouslySetInnerHTML={{__html: block.data.code}}></code>
-                        </pre>
+                        <SyntaxHighlighter className="code-block" key={key.toString()} showLineNumbers={true} language={block.data.language ? block.data.language : "plaintext"} style={docco}>{block.data.code}</SyntaxHighlighter>
                     );
                 }
 

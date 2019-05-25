@@ -5,7 +5,7 @@ import List from "@editorjs/list";
 import ImageTool from '@editorjs/image';
 import Marker from '@editorjs/marker';
 import InlineCode from '@editorjs/inline-code';
-import CodeTool from '@editorjs/code';
+import CodeTool from "../utilities/CodeHighlighting";
 import "./Editor.css";
 import Api from "../utilities/Api";
 
