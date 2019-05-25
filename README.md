@@ -11,6 +11,7 @@ HiShare, Anyone can share
 * 完善Build Process
 * 改进交互逻辑
 * i18n
+* 帖子Collections功能
 
 # Build Process
 至少需要两个ENV
