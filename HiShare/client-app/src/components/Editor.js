@@ -6,6 +6,7 @@ import ImageTool from '@editorjs/image';
 import Marker from '@editorjs/marker';
 import InlineCode from '@editorjs/inline-code';
 import CodeTool from "../utilities/CodeHighlighting";
+import Markdown from "../utilities/Markdown";
 import "./Editor.css";
 import Api from "../utilities/Api";
 
@@ -73,6 +74,10 @@ class Editor extends React.Component {
                 code: {
                     class: CodeTool,
                     shortcut: 'CMD+SHIFT+X',
+                },
+                markdown: {
+                    class: Markdown,
+                    shortcut: 'CMD+SHIFT+D',
                 }
             }
         });

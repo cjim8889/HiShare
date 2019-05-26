@@ -1,0 +1,17 @@
+.ce-markdown {
+    height: max-content;
+}
+.ce-markdown__textarea {
+    min-height: 200px;
+    color: #41314e;
+    line-height: 1.6rem;
+    font-size: 1rem;
+    background: #f8f7fa;
+    border: 1px solid #f1f1f4;
+    box-shadow: none;
+    white-space: pre;
+    word-wrap: normal;
+    resize: vertical;
+    overflow-x: auto;
+    height: max-content;
+}
