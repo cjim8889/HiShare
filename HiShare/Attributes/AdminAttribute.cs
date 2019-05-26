@@ -10,12 +10,11 @@ namespace HiShare.Attributes
 {
     public class AdminAttribute : Attribute, IAuthorizationFilter
     {
-        private readonly IConfiguration config;
-
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var config = (IConfiguration) context.HttpContext.RequestServices.GetService(typeof(IConfiguration));
-            if (string.IsNullOrWhiteSpace(config.GetSection("Admin:Token").Value))
+            var adminToken = config.GetSection("Admin_Token").Value;
+            if (string.IsNullOrWhiteSpace(adminToken))
             {
                 context.Result = new UnauthorizedResult();
             }
@@ -27,7 +26,7 @@ namespace HiShare.Attributes
                 context.Result = new UnauthorizedResult();
             }
 
-            if (userProvidedToken != config.GetSection("Admin:Token").Value)
+            if (userProvidedToken != adminToken)
             {
                 context.Result = new UnauthorizedResult();
             }
