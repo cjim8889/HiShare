@@ -7,7 +7,7 @@ import Api from "../utilities/Api";
 import DOMPurify from "dompurify";
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-
+import { RenderMarkdown } from "../utilities/Markdown";
 class Article extends React.Component {
     constructor(props) {
         super(props);
@@ -41,6 +41,48 @@ class Article extends React.Component {
         }
     }
 
+    static renderElement(block, key) {
+
+        let purifiedText, doc;
+
+        if (block.data.text) {
+            purifiedText = DOMPurify.sanitize(block.data.text);
+        }
+
+        if (block.type === "header") {
+
+            doc = React.createElement(`h${block.data.level}`, {
+                key: key,
+                dangerouslySetInnerHTML: {
+                    __html: purifiedText
+                }
+            });
+
+        } else if (block.type === "paragraph") {
+
+            doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
+
+        } else if (block.type === "image") {
+
+            doc = <figure key={key.toString()}>
+                <img src={block.data.file.url} alt={block.data.caption ? block.data.caption : "HiShare"} />
+                {
+                    block.data.caption ?
+                        <figcaption>{block.data.caption}</figcaption>
+                        : null
+                }
+            </figure>;
+
+        } else if (block.type === "code") {
+            doc = (
+                <SyntaxHighlighter className="code-block" key={key.toString()} showLineNumbers={true} language={block.data.language ? block.data.language : "plaintext"} style={docco}>{block.data.code}</SyntaxHighlighter>
+            );
+        } else if (block.type === "markdown") {
+            doc = RenderMarkdown(block.data.markdown, key);
+        }
+
+        return doc;
+    }
 
     composeContent() {
         const children = [];
@@ -48,52 +90,12 @@ class Article extends React.Component {
         let key = 1;
         if (this.state.article.content != null) {
             this.state.article.content.forEach((block) => {
-                let purifiedText, doc;
 
-                if (block.data.text) {
-                    purifiedText = DOMPurify.sanitize(block.data.text);
-                }
-
-                if (block.type === "header") {
-
-                    doc = React.createElement(`h${block.data.level}`, {
-                        key: key,
-                        dangerouslySetInnerHTML: {
-                            __html: purifiedText
-                        }
-                    });
-
-                } else if (block.type === "paragraph") {
-
-                    doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
-
-                } else if (block.type === "image") {
-
-                    doc = <figure key={key.toString()}>
-                        <img src={block.data.file.url} alt={block.data.caption ? block.data.caption : "HiShare"} />
-                        {
-                            block.data.caption ?
-                                <figcaption>{block.data.caption}</figcaption>
-                                : null
-                        }
-                    </figure>;
-
-                } else if (block.type === "code") {
-                    doc = (
-                        <SyntaxHighlighter className="code-block" key={key.toString()} showLineNumbers={true} language={block.data.language ? block.data.language : "plaintext"} style={docco}>{block.data.code}</SyntaxHighlighter>
-                    );
-                }
-
-
+                let doc = Article.renderElement(block, key);
                 key += 1;
                 children.push(doc);
             });
         }
-
-        let comments = <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments} />;
-        children.push(<PublishedDate key="published-date" date={this.state.article.publishedAt} />);
-        children.push(comments);
-
 
         return children;
     }
@@ -102,6 +104,8 @@ class Article extends React.Component {
         return (
             <div className="article-page" ref={this.rootNode} >
                 {this.state.children}
+                <PublishedDate key="published-date" date={this.state.article.publishedAt} />
+                <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments ? this.state.article.comments : []} />
                 {
                     this.state.invalidToken ?
                         <Redirect to="/404"/>

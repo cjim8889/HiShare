@@ -1,4 +1,9 @@
 import "./Markdown.css";
+import DOMPurify from "dompurify";
+import React from "react";
+import marked from "marked";
+
+
 export default class Markdown {
     static get enableLineBreaks() {
         return true;
@@ -66,4 +71,12 @@ export default class Markdown {
             title: 'Markdown'
         };
     }
+}
+
+
+export function RenderMarkdown(markdown, key) {
+    let html = marked(markdown);
+    let sanitizedHtml = DOMPurify.sanitize(html);
+
+    return <div key={key.toString()} className="markdown-wrapper" dangerouslySetInnerHTML={{__html: sanitizedHtml}} />
 }
