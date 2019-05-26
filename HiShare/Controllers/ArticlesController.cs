@@ -54,11 +54,6 @@ namespace HiShare.Controllers
 
             return Ok(ret);
         }
-        [HttpPost("text")]
-        public IActionResult Test([FromBody]Article article)
-        {
-            return Ok(article.AccessToken);
-        }
 
         [HttpPost]
         public async Task<IActionResult> CreateArticle([FromBody]ArticleRequestDTO article, [FromQuery(Name = "t")]string token)

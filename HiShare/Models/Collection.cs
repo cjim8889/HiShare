@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using HiShare.Services;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,24 @@ namespace HiShare.Models
 {
     public class Collection
     {
+        public Collection()
+        {
+            Initialize();
+        }
+
+        public Collection(CollectionRequestDTO requestDTO)
+        {
+            Name = requestDTO.Name;
+        }
+
+        private void Initialize()
+        {
+            AccessToken = ArticleService.GenerateToken(32);
+            ControlToken = ArticleService.GenerateToken(32);
+            Articles = new List<ArticleDTO>();
+            Comments = new List<Comment>();
+            CreatedAt = ModifiedAt = DateTime.UtcNow;
+        }
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -26,7 +45,10 @@ namespace HiShare.Models
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime ModifiedAt { get; set; }
     }
-
+    public class CollectionRequestDTO
+    {
+        public string Name { get; set; }
+    }
     public class CollectionDTO
     {
         public string Id { get; set; }

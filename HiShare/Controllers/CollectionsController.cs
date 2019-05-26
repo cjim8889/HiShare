@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HiShare.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,17 @@ namespace HiShare.Controllers
     [ApiController]
     public class CollectionsController : ControllerBase
     {
+        private readonly CollectionService collection;
 
+        public CollectionsController(CollectionService collection)
+        {
+            this.collection = collection;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCollection([FromBody] )
+        {
+
+        }
     }
 }

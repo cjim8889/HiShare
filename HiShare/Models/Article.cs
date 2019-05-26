@@ -80,7 +80,7 @@ namespace HiShare.Models
         private void Initialize()
         {
             AccessToken = ArticleService.GenerateToken(32);
-            PublishedAt = DateTime.Now;
+            PublishedAt = DateTime.UtcNow;
             AllowComment = true;
             Comments = new List<Comment>();
         }
