@@ -24,5 +24,10 @@ namespace HiShare.Services
 
             return repository.UpdateAsync<Article>(update, filter);
         }
+
+        public Task<bool> DeleteArticle(string accessToken)
+        {
+            return repository.DeleteAsync<Article>(x => x.AccessToken == accessToken);
+        }
     }
 }

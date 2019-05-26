@@ -10,7 +10,7 @@ namespace HiShare.Repositories
 {
     public interface IRepository
     {
-        Task DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
+        Task<bool> DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
         Task<T> SingleAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
         Task<IEnumerable<T>> ManyAsync<T>(Expression<Func<T, bool>> expression) where T : class, new();
         Task AddAsync<T>(T item) where T : class, new();
@@ -38,9 +38,11 @@ namespace HiShare.Repositories
             await dbContext.Database.GetCollection<T>(typeof(T).Name).InsertManyAsync(items);
         }
 
-        public async Task DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
+        public async Task<bool> DeleteAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()
         {
-            await dbContext.Database.GetCollection<T>(typeof(T).Name).DeleteOneAsync(expression);
+            var result = await dbContext.Database.GetCollection<T>(typeof(T).Name).DeleteOneAsync(expression);
+
+            return result.IsAcknowledged ? result.DeletedCount > 0 : false;
         }
 
         public async Task<IEnumerable<T>> ManyAsync<T>(Expression<Func<T, bool>> expression) where T : class, new()

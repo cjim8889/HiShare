@@ -22,6 +22,22 @@ namespace HiShare.Controllers
             this.admin = admin;
         }
 
+        [Admin]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteArticle([FromQuery(Name = "t")]string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest();
+            }
+
+            if (await admin.DeleteArticle(token))
+            {
+                return Ok();
+            }
+
+            return NotFound();
+        }
 
         [Admin]
         [HttpGet("ban")]
@@ -36,10 +52,8 @@ namespace HiShare.Controllers
             {
                 return Ok();
             }
-            else
-            {
-                return NotFound();
-            }
+
+            return NotFound();
         }
     }
 }
