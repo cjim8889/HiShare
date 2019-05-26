@@ -56,20 +56,21 @@ namespace HiShare.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateArticle([FromBody]ArticleRequestDTO article, [FromQuery(Name = "t")]string token)
+        public async Task<IActionResult> CreateArticle([FromBody]ArticleRequestDTO articleDTO, [FromQuery(Name = "t")]string token)
         {
             if (!await recaptcha.Authenticate(token))
             {
                 return BadRequest();
             }
 
-            if (article.IsPublic && string.IsNullOrWhiteSpace(article.Title) || string.IsNullOrWhiteSpace(article.Content) || article.Content.Length < 10)
+            if (articleDTO.IsPublic && string.IsNullOrWhiteSpace(articleDTO.Title) || string.IsNullOrWhiteSpace(articleDTO.Content) || articleDTO.Content.Length < 10)
             {
                 return BadRequest();
             }
 
-            await articleService.New(new Article(article));
-            return CreatedAtAction("CreateArticle", article);
+            var article = new Article(articleDTO);
+            await articleService.New(article);
+            return CreatedAtAction("CreateArticle", articleDTO);
         }
 
         [HttpPost("{token}/comment")]

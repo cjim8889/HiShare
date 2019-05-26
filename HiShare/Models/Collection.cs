@@ -15,6 +15,7 @@ namespace HiShare.Models
         public Collection(CollectionRequestDTO requestDTO)
         {
             Name = requestDTO.Name;
+            IsPublic = requestDTO.IsPublic;
         }
 
         private void Initialize()
@@ -36,6 +37,8 @@ namespace HiShare.Models
         public IList<ArticleDTO> Articles { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
+        [BsonElement("IsPublic")]
+        public bool IsPublic { get; set; }
         [BsonElement("Comments")]
         public IList<Comment> Comments { get; set; }
         [BsonElement("CreatedAt")]
@@ -48,11 +51,13 @@ namespace HiShare.Models
     public class CollectionRequestDTO
     {
         public string Name { get; set; }
+        public bool IsPublic { get; set; }
     }
     public class CollectionDTO
     {
         public string Id { get; set; }
         public string AccessToken { get; set; }
+        public bool IsPublic { get; set; }
         public IList<ArticleDTO> Articles { get; set; }
         public string Name { get; set; }
         public IList<Comment> Comments { get; set; }
