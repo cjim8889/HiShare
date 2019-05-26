@@ -10,6 +10,8 @@ HiShare, Anyone can share
 * 完善Editor功能
 * 完善Build Process
 * 改进交互逻辑
+* i18n
+* 帖子Collections功能
 
 # Build Process
 至少需要两个ENV
@@ -33,6 +35,3 @@ REACT_APP_RECAPTCHA_SITEKEY=你的Key npm run build
 
 # Known Issues
 * <s>编辑器图片功能UI bug</s>
-
-# Todo
-* 敬请期待
