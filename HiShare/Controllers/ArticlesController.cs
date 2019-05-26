@@ -54,9 +54,14 @@ namespace HiShare.Controllers
 
             return Ok(ret);
         }
+        [HttpPost("text")]
+        public IActionResult Test([FromBody]Article article)
+        {
+            return Ok(article.AccessToken);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> CreateArticle([FromBody]Article article, [FromQuery(Name = "t")]string token)
+        public async Task<IActionResult> CreateArticle([FromBody]ArticleRequestDTO article, [FromQuery(Name = "t")]string token)
         {
             if (!await recaptcha.Authenticate(token))
             {
@@ -68,7 +73,7 @@ namespace HiShare.Controllers
                 return BadRequest();
             }
 
-            await articleService.New(article);
+            await articleService.New(new Article(article));
             return CreatedAtAction("CreateArticle", article);
         }
 

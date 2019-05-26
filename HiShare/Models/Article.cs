@@ -3,6 +3,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,9 +54,30 @@ namespace HiShare.Models
         public string Title { get; set; }
     }
 
+    public class ArticleRequestDTO
+    {
+        public bool AllowComment { get; set; }
+        public bool IsPublic { get; set; }
+        public string Content { get; set; }
+        public string Title { get; set; }
+    }
+
     public class Article
     {
         public Article()
+        {
+            Initialize();
+        }
+
+        public Article(ArticleRequestDTO requestDTO)
+        {
+            Initialize();
+            AllowComment = requestDTO.AllowComment;
+            IsPublic = requestDTO.IsPublic;
+            Title = requestDTO.Title;
+            Content = requestDTO.Content;
+        }
+        private void Initialize()
         {
             AccessToken = ArticleService.GenerateToken(32);
             PublishedAt = DateTime.Now;
@@ -66,6 +89,7 @@ namespace HiShare.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
+        
         [BsonElement("PublishedAt")]
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime PublishedAt { get; set; }
