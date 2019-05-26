@@ -28,6 +28,7 @@ class PublishArticle extends React.Component {
         this.handlePublish = this.handlePublish.bind(this);
         this.handleClearEditor = this.handleClearEditor.bind(this);
         this.handleRecaptchaCallback = this.handleRecaptchaCallback.bind(this);
+        this.handleEditorSave = this.handleEditorSave.bind(this);
     }
 
     handleClearEditor() {
@@ -91,6 +92,10 @@ class PublishArticle extends React.Component {
         this.setState({recaptchaToken: token});
     }
 
+    handleEditorSave() {
+        this.handleEditorChange();
+    }
+
     render() {
         return (
             <div className="publish-page">
@@ -110,7 +115,7 @@ class PublishArticle extends React.Component {
                         </MessageBar>
                         : null
                 }
-                <PublishController handleRecaptcha={this.handleRecaptchaCallback} handlePublish={this.handlePublish} handleClear={this.handleClearEditor}/>
+                <PublishController handleSave={this.handleEditorSave} handleRecaptcha={this.handleRecaptchaCallback} handlePublish={this.handlePublish} handleClear={this.handleClearEditor}/>
             </div>
         )
     }

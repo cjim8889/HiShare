@@ -19,7 +19,7 @@
     display: block;
 }
 
-.command-group > *:first-child {
+.command-group > * {
     margin-right: 1rem;
 }
 

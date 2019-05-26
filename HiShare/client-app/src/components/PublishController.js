@@ -50,7 +50,6 @@ function PublishController(props) {
         }
     }
 
-
     return (
         <div className="button-group">
             <Recaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
@@ -85,6 +84,9 @@ function PublishController(props) {
                 </CompoundButton>
                 <CompoundButton secondaryText="清空文章" onClick={props.handleClear}>
                     清空
+                </CompoundButton>
+                <CompoundButton secondaryText="保存草稿" onClick={props.handleSave}>
+                    保存
                 </CompoundButton>
             </div>
         </div>

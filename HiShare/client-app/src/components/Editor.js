@@ -15,6 +15,7 @@ class Editor extends React.Component {
         super(props);
 
         this.editor = null;
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange() {
