@@ -24,6 +24,7 @@ namespace HiShare.Controllers
 
 
         [Admin]
+        [HttpGet("ban")]
         public async Task<IActionResult> SetArticleToPrivate([FromQuery(Name = "t")]string token)
         {
             if (string.IsNullOrWhiteSpace(token))
