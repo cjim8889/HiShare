@@ -35,8 +35,7 @@ class Article extends React.Component {
         } else {
             let article = {...response.data, content: JSON.parse(response.data.content)};
             this.setState({article: article}, () => {
-                this.setState({children: this.composeContent()}, () => {
-                });
+                this.setState({children: this.composeContent()}, () => {});
             })
         }
     }

@@ -106,7 +106,7 @@ class PublishArticle extends React.Component {
                 {
                     this.state.publishError ?
                         <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close">
-                            发布文章失败,请检查是否文章为空或默认值
+                            发布文章失败,请检查是否文章为空或默认值或标题长度超过40个字符
                         </MessageBar>
                         : null
                 }

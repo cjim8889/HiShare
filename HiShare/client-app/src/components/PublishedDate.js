@@ -4,12 +4,11 @@ import "./PublishedDate.css";
 
 function PublishedDate(props) {
 
-    const [publishedDate, ] = useState(props.date);
     const [result, setResult] = useState("");
 
     useEffect(() => {
-        setResult(Api.durationFromNowString(new Date(publishedDate)));
-    }, [publishedDate]);
+        setResult(Api.durationFromNowString(new Date(props.date)));
+    }, [props.date]);
 
     return (
         <div className={`${props.className ? props.className : ""} publish-time`}>
