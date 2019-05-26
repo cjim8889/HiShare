@@ -40,6 +40,7 @@ namespace HiShare
             services.AddSingleton<RecaptchaService>();
 
             services.AddScoped<ArticleService>();
+            services.AddScoped<AdminService>();
             
         }
 
