@@ -64,7 +64,7 @@ class PublishArticle extends React.Component {
     }
 
     async handlePublish(object) {
-
+        await this.handleEditorChange();
         if (this.state.blocks === null || this.state.blocks === undefined || !this.state.blocks.length > 0)
         {
             this.setState({publishError: true});

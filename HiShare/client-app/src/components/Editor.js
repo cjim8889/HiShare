@@ -15,7 +15,6 @@ class Editor extends React.Component {
         super(props);
 
         this.editor = null;
-        this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +39,6 @@ class Editor extends React.Component {
         this.editor = new EditorJs({
             autofocus: true,
             holders: "editorjs",
-            onChange: this.onChange,
             data: {
                 blocks: blocks
             },
@@ -86,9 +84,7 @@ class Editor extends React.Component {
     }
     
 
-    onChange() {
-        this.props.onChange(this.editor);
-    }
+
 
     render() {
         return <div id="editorjs" />;

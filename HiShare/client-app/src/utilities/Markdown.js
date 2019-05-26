@@ -26,8 +26,8 @@ export default class Markdown {
             textarea: null
         };
 
-        this.data = {
-            code: data.code || '',
+        this._data = {
+            markdown: data.markdown || '',
         };
 
         this.nodes.holder = this.drawView();
@@ -40,11 +40,13 @@ export default class Markdown {
         wrapper.classList.add(this.CSS.baseClass, this.CSS.wrapper);
         textarea.classList.add(this.CSS.textarea, this.CSS.input);
 
-        textarea.textContent = this.data.code;
+        textarea.textContent = this._data.code;
 
         textarea.placeholder = this.placeholder;
 
         wrapper.appendChild(textarea);
+
+
 
         this.nodes.textarea = textarea;
 
@@ -55,11 +57,13 @@ export default class Markdown {
         return this.nodes.holder;
     }
 
-    save(codeWrapper) {
+    save(wrapper) {
         return {
-            markdown: codeWrapper.querySelector('textarea').value,
+            markdown: this.nodes.textarea.value,
         };
     }
+
+
 
     static get DEFAULT_PLACEHOLDER() {
         return 'Markdown...';
