@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HiShare.Attributes;
 using HiShare.Repositories;
+using HiShare.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,17 +15,30 @@ namespace HiShare.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IRepository repository;
-        public AdminController(IConfiguration configuration, IRepository repository)
+        private readonly AdminService admin;
+
+        public AdminController(IConfiguration configuration, AdminService admin)
         {
-            this.repository = repository;
+            this.admin = admin;
         }
 
 
         [Admin]
-        public IActionResult SetArticleToPrivate([FromQuery(Name = "t")]string token)
+        public async Task<IActionResult> SetArticleToPrivate([FromQuery(Name = "t")]string token)
         {
-            return Ok("nihao");
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest();
+            }
+
+            if (await admin.SetArticleToPrivate(token))
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
