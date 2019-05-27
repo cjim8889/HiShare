@@ -23,7 +23,7 @@ class Article extends React.Component {
         this.rootNode = React.createRef();
 
         this.composeContent = this.composeContent.bind(this);
-
+        this.handleNewComment = this.handleNewComment.bind(this);
     }
 
 
@@ -99,12 +99,16 @@ class Article extends React.Component {
         return children;
     }
 
+    handleNewComment(comment) {
+        this.setState({article: {...this.state.article, comments: [...this.state.article.comments, comment]}});
+    }
+
     render() {
         return (
             <div className="article-page" ref={this.rootNode} >
                 {this.state.children}
                 <PublishedDate key="published-date" date={this.state.article.publishedAt} />
-                <CommentList accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments ? this.state.article.comments : []} />
+                <CommentList handleNewComment={this.handleNewComment} accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments ? this.state.article.comments : []} />
                 {
                     this.state.invalidToken ?
                         <Redirect to="/404"/>

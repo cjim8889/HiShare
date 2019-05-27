@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { List } from 'office-ui-fabric-react/lib/List';
 import { Separator } from 'office-ui-fabric-react/lib/Separator';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
@@ -19,7 +19,6 @@ function CommentItem(props) {
 
 function CommentList(props) {
 
-    const [comments, setComments] = useState([...props.comments]);
 
     function onRenderCell(items, index) {
         return (
@@ -27,13 +26,15 @@ function CommentList(props) {
         )
     }
 
+
+
     function handleNewComment(comment) {
-        setComments([...comments, comment]);
+        props.handleNewComment(comment);
     }
     return (
         <div className="comment-list">
             <Separator alignContent="center" className="separator"><Icon iconName="Comment" styles={{root: { fontSize: "3rem"}}}/></Separator>
-            <List items={comments} onRenderCell={onRenderCell}/>
+            <List items={props.comments} onRenderCell={onRenderCell}/>
             <CommentInterface accessToken={props.accessToken} onNew={handleNewComment} />
         </div>
     )
