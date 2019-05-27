@@ -7,6 +7,7 @@ import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator'
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import "./PublishArticle.css";
 import Api from "../utilities/Api";
+import { safeSetTimeout } from "@uifabric/utilities";
 
 
 class PublishArticle extends React.Component {
@@ -79,9 +80,9 @@ class PublishArticle extends React.Component {
 
         try {
             let response = await Api.NewArticle(article, this.state.recaptchaToken);
-
-            this.setState({accessToken: response.data.accessToken});
-            this.setState({publishedRedirect: true});
+            this.setState({ accessToken: response.data.accessToken }, () => {
+                this.setState({ publishedRedirect: true });
+            });
             localStorage.removeItem("blocks");
         } catch (e) {
             this.setState({publishError: true});

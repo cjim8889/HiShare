@@ -1,9 +1,8 @@
 ﻿using HiShare.Models;
 using HiShare.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HiShare.Controllers
@@ -12,22 +11,22 @@ namespace HiShare.Controllers
     [ApiController]
     public class CollectionsController : ControllerBase
     {
-        private readonly CollectionService collection;
-        private readonly RecaptchaService recaptcha;
+        private readonly CollectionService collectionService;
+        private readonly RecaptchaService recaptchaService;
 
         public CollectionsController(CollectionService collection, RecaptchaService recaptcha)
         {
-            this.collection = collection;
-            this.recaptcha = recaptcha;
+            this.collectionService = collection;
+            this.recaptchaService = recaptcha;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCollection([FromBody] CollectionRequestDTO requestDTO, [FromQuery(Name = "t")]string token)
+        public async Task<ActionResult<Collection>> CreateCollection([FromBody] CollectionRequestDTO requestDTO, [FromQuery(Name = "t")]string token)
         {
-            if (!await recaptcha.Authenticate(token))
-            {
-                return BadRequest();
-            }
+            //if (!await recaptcha.Authenticate(token))
+            //{
+            //    return BadRequest();
+            //}
 
             if (string.IsNullOrWhiteSpace(requestDTO.Name))
             {
@@ -35,15 +34,15 @@ namespace HiShare.Controllers
             }
 
             var collectionObj = new Collection(requestDTO);
-            await collection.New(collectionObj);
+            await collectionService.New(collectionObj);
 
             return Ok(collectionObj);
         }
 
-        [HttpGet("{adminToken}/{accessToken}")]
-        public async Task<IActionResult> InsertToCollection(string adminToken, string accessToken)
+        [HttpGet("{controlToken}/{accessToken}")]
+        public async Task<IActionResult> InsertToCollection(string controlToken, string accessToken)
         {
-            if (!await collection.InsertTo(adminToken, accessToken))
+            if (!await collectionService.InsertTo(controlToken, accessToken))
             {
                 return NotFound();
             }
@@ -51,10 +50,31 @@ namespace HiShare.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPublicCollections([FromQuery]int? offset)
+        [HttpDelete("{controlToken}/{accessToken}")]
+        public async Task<IActionResult> RemoveFromCollection(string controlToken, string accessToken)
         {
-            var result = await collection.GetLatestPublicCollections(30, offset);
+            if (!await collectionService.RemoveFrom(controlToken, accessToken))
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+        [HttpGet("{accessToken}")]
+        public async Task<ActionResult<CollectionDTO>> GetCollectionsById(string accessToken)
+        {
+            var col = await collectionService.GetByAccessToken(accessToken);
+            if (col == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new CollectionDTO(col));
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Collection>>> GetPublicCollections([FromQuery]int? offset)
+        {
+            var result = await collectionService.GetLatestPublicCollections(30, offset);
             return Ok(result);
         }
     }

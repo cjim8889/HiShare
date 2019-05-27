@@ -70,7 +70,7 @@ namespace HiShare.Controllers
 
             var article = new Article(articleDTO);
             await articleService.New(article);
-            return CreatedAtAction("CreateArticle", articleDTO);
+            return CreatedAtAction("CreateArticle", article);
         }
 
         [HttpPost("{token}/comment")]

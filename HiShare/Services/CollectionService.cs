@@ -33,8 +33,20 @@ namespace HiShare.Services
                 skip.HasValue ? skip.Value : 0
                 );
         }
+        public async Task<bool> RemoveFrom(string controlToken, string accessToken)
+        {
+            var update = Builders<Collection>.Update.PullFilter("Articles", Builders<ArticleDTO>.Filter.Eq("AccessToken", accessToken));
+            var filter = Builders<Collection>.Filter.Eq("ControlToken", controlToken);
 
-        public async Task<bool> InsertTo(string adminToken, string accessToken)
+            return await repository.UpdateAsync(update, filter);
+        }
+
+        public Task<Collection> GetByAccessToken(string accessToken)
+        {
+            return repository.SingleAsync<Collection>(c => c.AccessToken == accessToken);
+        }
+
+        public async Task<bool> InsertTo(string controlToken, string accessToken)
         {
             var article = await articleService.GetByAccessToken(accessToken);
             if (article == null)
@@ -43,7 +55,7 @@ namespace HiShare.Services
             }
 
             var update = Builders<Collection>.Update.AddToSet("Articles", new ArticleDTO(article));
-            var filter = Builders<Collection>.Filter.Eq("AdminToken", adminToken);
+            var filter = Builders<Collection>.Filter.Eq("ControlToken", controlToken);
 
             return await repository.UpdateAsync(update, filter);
         }

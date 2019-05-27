@@ -3,6 +3,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 namespace HiShare.Models
 {
     public class Collection
@@ -16,6 +18,7 @@ namespace HiShare.Models
         {
             Name = requestDTO.Name;
             IsPublic = requestDTO.IsPublic;
+            Initialize();
         }
 
         private void Initialize()
@@ -55,9 +58,24 @@ namespace HiShare.Models
     }
     public class CollectionDTO
     {
+        public CollectionDTO(Collection collection)
+        {
+            Id = collection.Id;
+            AccessToken = collection.AccessToken;
+            IsPublic = collection.IsPublic;
+            //Default returning the latest 30 articles.
+            Articles = collection.Articles.OrderByDescending(x => x.PublishedAt).Take(30).ToList();
+            ArticlesCount = collection.Articles.Count;
+            Name = collection.Name;
+            Comments = collection.Comments;
+            CreatedAt = collection.CreatedAt;
+            ModifiedAt = collection.ModifiedAt;
+        }
+
         public string Id { get; set; }
         public string AccessToken { get; set; }
         public bool IsPublic { get; set; }
+        public int ArticlesCount { get; set; }
         public IList<ArticleDTO> Articles { get; set; }
         public string Name { get; set; }
         public IList<Comment> Comments { get; set; }
