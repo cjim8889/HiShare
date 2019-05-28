@@ -23,7 +23,7 @@ namespace HiShare.Controllers
         [HttpPost]
         public async Task<ActionResult<Collection>> CreateCollection([FromBody] CollectionRequestDTO requestDTO, [FromQuery(Name = "t")]string token)
         {
-            if (!await recaptcha.Authenticate(token))
+            if (!await recaptchaService.Authenticate(token))
             {
                 return BadRequest();
             }
