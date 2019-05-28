@@ -13,6 +13,7 @@ HiShare, Anyone can share
 * 改进交互逻辑
 * i18n
 * 帖子Collections功能
+* Code Cleanup
 
 # Build Process
 至少需要两个ENV
