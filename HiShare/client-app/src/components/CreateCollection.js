@@ -3,13 +3,16 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import Recaptcha from 'react-recaptcha';
 import "./CreateCollection.css";
 import Api from "../utilities/Api";
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
+import { Text } from 'office-ui-fabric-react/lib/Text';
+import { getTheme, FontWeights } from 'office-ui-fabric-react/lib/Styling';
+import { Label } from 'office-ui-fabric-react/lib/Label';
 
 export default function CreateCollection(props) {
 
@@ -132,6 +135,34 @@ export default function CreateCollection(props) {
                     <PrimaryButton onClick={handleDismissDialog} text="确认" />
                 </DialogFooter>
             </Dialog>
+        </div>
+    )
+}
+
+export function CollectionInfo(props) {
+
+    function renderDescription() {
+        return (
+            <Text variant="small" styles={{ root: { color: getTheme().palette.red, fontWeight: FontWeights.bold } }}>
+                重要
+            </Text>
+        )
+    }
+
+    return (
+        <div className="collection-info">
+            <TextField label="Access Token" readOnly defaultValue={props.collection.accessToken} />
+            {
+                props.collection.controlToken ?
+                    <TextField label="Control Token" onRenderDescription={renderDescription} readOnly defaultValue={props.collection.controlToken} />
+                    : null
+            }
+            <div>
+                <Label>文章数</Label>
+                {
+                    props.collection.articlesCount ? props.collection.articlesCount : props.collection.articles ? props.collection.articles.length : 0
+                }
+            </div>
         </div>
     )
 }

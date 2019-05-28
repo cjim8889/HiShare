@@ -8,9 +8,25 @@
     grid-column: 3 / 4;
 }
 
+.collection-new-button-group {
+    margin: 0 auto;
+}
+
+.collection-new-button-group > * {
+    margin-right: 1rem;
+}
+
+.collection-new-button-group > *:last-child {
+    margin-right: 0;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .collection-new-main {
         grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
+    }
+
+    .collection-new-main > * {
+        grid-column: 2 / 3;
     }
 }
 

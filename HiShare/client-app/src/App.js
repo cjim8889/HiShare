@@ -19,6 +19,7 @@ function App() {
                 <Route path="/articles/:token" exact component={Article} />
                 <Route path="/404" component={NotFound} />
                 <Route path="/collections/new" component={NewCollection}/>
+                <Route path="/collections/:accessToken/:controlToken/edit"  />
                 <Route component={NotFound} />
             </Switch>
         </Router>
