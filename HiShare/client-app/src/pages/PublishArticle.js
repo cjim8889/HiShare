@@ -7,7 +7,6 @@ import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator'
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import "./PublishArticle.css";
 import Api from "../utilities/Api";
-import { safeSetTimeout } from "@uifabric/utilities";
 
 
 class PublishArticle extends React.Component {
