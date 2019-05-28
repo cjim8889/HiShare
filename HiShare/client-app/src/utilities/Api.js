@@ -14,6 +14,14 @@ class Api {
         });
     }
 
+    static async NewCollection(collection, recaptchaToken) {
+        return await axios.post(this.apiUrl + "/api/collections", {...collection}, {
+            params: {
+                t: recaptchaToken
+            }
+        });
+    }
+
     static async GetArticle(accessToken) {
         try {
             return await axios.get(this.apiUrl + "/api/articles/" + accessToken);

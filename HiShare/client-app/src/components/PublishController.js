@@ -10,7 +10,6 @@ import Recaptcha from 'react-recaptcha';
 
 function PublishController(props) {
     //eslint-disable-next-line
-    const [recaptchaInstance, setRecaptchaInstance] = useState(null);
     const [isPublic, setIsPublic] = useState(true);
     const [title, setTitle] = useState(null);
     const [titleError, settE] = useState(null);
@@ -53,7 +52,6 @@ function PublishController(props) {
     return (
         <div className="button-group">
             <Recaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITEKEY}
-                       ref={e => setRecaptchaInstance(e)}
                        className="recaptcha"
                        verifyCallback={handleRecaptcha}
                        render="explicit"
