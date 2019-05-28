@@ -46,18 +46,24 @@ namespace HiShare.Services
             return repository.SingleAsync<Collection>(c => c.AccessToken == accessToken);
         }
 
-        public async Task<bool> InsertTo(string controlToken, string accessToken)
+        public async Task<ArticleDTO> InsertTo(string controlToken, string accessToken)
         {
             var article = await articleService.GetByAccessToken(accessToken);
             if (article == null)
             {
-                return false;
+                return null;
             }
 
-            var update = Builders<Collection>.Update.AddToSet("Articles", new ArticleDTO(article));
+            var articleDTO = new ArticleDTO(article);
+            var update = Builders<Collection>.Update.AddToSet("Articles", articleDTO);
             var filter = Builders<Collection>.Filter.Eq("ControlToken", controlToken);
 
-            return await repository.UpdateAsync(update, filter);
+            if (!await repository.UpdateAsync(update, filter))
+            {
+                return null;
+            }
+
+            return articleDTO;
         }
     }
 }

@@ -42,12 +42,14 @@ namespace HiShare.Controllers
         [HttpGet("{controlToken}/{accessToken}")]
         public async Task<IActionResult> InsertToCollection(string controlToken, string accessToken)
         {
-            if (!await collectionService.InsertTo(controlToken, accessToken))
+            var articleDTO = await collectionService.InsertTo(controlToken, accessToken);
+
+            if (articleDTO == null)
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(articleDTO);
         }
 
         [HttpDelete("{controlToken}/{accessToken}")]
