@@ -1,0 +1,26 @@
+.collection-new-main {
+    display: grid;
+
+    grid-template-columns: 1fr minmax(0px, 2vw) 2fr minmax(0px, 2vw) 1fr;
+}
+
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .collection-new-main {
+        grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
+    }
+}
+
+
+@media only screen and (min-device-width : 480px) and (max-device-width : 768px) {
+    .collection-new-main {
+        grid-template-columns: 1fr minmax(0px, 2vw) 5fr minmax(0px, 2vw) 1fr;
+    }
+
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1224px) {
+    .collection-new-main {
+        grid-template-columns: 1fr minmax(0px, 2vw) 4fr minmax(0px, 2vw) 1fr;
+    }
+}
