@@ -32,6 +32,10 @@ class Api {
         });
     }
 
+    static async InsertArticleToCollection(accessToken, controlToken) {
+        return await axios.get(this.apiUrl + "/api/collections/" + controlToken + "/" + accessToken);
+    }
+
     static async GetArticle(accessToken) {
         try {
             return await axios.get(this.apiUrl + "/api/articles/" + accessToken);

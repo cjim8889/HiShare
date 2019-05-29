@@ -36,6 +36,17 @@
 .collection-edit-item > .collection-edit-item-delete {
     grid-column: 4 / 5;
 }
+
+.collection-edit-control {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.collection-edit-control > * {
+    margin-right: 1rem;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .collection-edit-page {
         grid-template-columns: minmax(0px, 2vw) 2fr minmax(0px, 2vw);
