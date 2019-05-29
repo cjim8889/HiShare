@@ -2,6 +2,7 @@ import React from "react";
 import "./NewCollection.css";
 import CreateCollection, { CollectionInfo } from "../components/CreateCollection";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { Redirect } from "react-router-dom";
 
 
 class NewCollection extends React.Component {
@@ -13,12 +14,14 @@ class NewCollection extends React.Component {
         let collection = JSON.parse(localStorage.getItem("collection"));
 
         this.state = {
-            collection: collection ? collection : {}
+            collection: collection ? collection : {},
+            redirectToEdit: false
         };
 
 
         this.handleNew = this.handleNew.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
+        this.handleToEdit = this.handleToEdit.bind(this);
     }
 
     handleNew(collection) {
@@ -31,6 +34,9 @@ class NewCollection extends React.Component {
         this.setState({collection: {}});
     }
 
+    handleToEdit() {
+        this.setState({redirectToEdit: true});
+    }
     render() {
         return (
             <div className="collection-new-main">
@@ -49,6 +55,7 @@ class NewCollection extends React.Component {
                     Object.keys(this.state.collection).length ?
                         <div className="collection-new-button-group">
                             <DefaultButton
+                                onClick={this.handleToEdit}
                                 text="编辑Collection"
                             />
                             <PrimaryButton
@@ -56,6 +63,16 @@ class NewCollection extends React.Component {
                                 text="新建Collection"
                             />
                         </div>
+                        :null
+                }
+                {
+                    this.state.redirectToEdit ?
+                        <Redirect to={{
+                            pathname: `/collections/${this.state.collection.accessToken}/${this.state.collection.controlToken}/edit`,
+                            state: {
+                                collection: this.state.collection
+                            }
+                        }}/>
                         :null
                 }
             </div>

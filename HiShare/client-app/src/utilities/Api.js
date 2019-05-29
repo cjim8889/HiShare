@@ -22,6 +22,16 @@ class Api {
         });
     }
 
+    static async GetCollection(accessToken) {
+        return await axios.get(this.apiUrl + "/api/collections/" + accessToken);
+    }
+
+    static async RemoveFromCollection(accessToken, controlToken) {
+        return await fetch(this.apiUrl + "/api/collections/" + controlToken + "/" + accessToken, {
+            method: 'DELETE'
+        });
+    }
+
     static async GetArticle(accessToken) {
         try {
             return await axios.get(this.apiUrl + "/api/articles/" + accessToken);

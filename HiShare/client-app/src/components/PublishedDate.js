@@ -11,7 +11,7 @@ function PublishedDate(props) {
     }, [props.date]);
 
     return (
-        <div className={`${props.className ? props.className : ""} publish-time`}>
+        <div className={`publish-time ${props.className}`}>
             发布于{result}
         </div>
     )
