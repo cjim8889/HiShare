@@ -1,0 +1,22 @@
+.collection-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.collection-item-title {
+    grid-column: 1 / 2;
+}
+
+.collection-item-publish-date {
+    grid-column: 2 / 3;
+    text-align: right;
+    /*font-size: 21px;*/
+}
+
+.collection-item-url {
+    color: black;
+    text-decoration: none;
+}

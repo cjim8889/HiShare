@@ -1,0 +1,14 @@
+.collection-wrapper {
+    display: grid;
+    grid-template-columns: 1fr minmax(0px, 5vw) 2fr minmax(0px, 5vw) 1fr;
+}
+
+.collection-wrapper > * {
+    grid-column: 3 / 4;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.collection-wrapper > *:first-child {
+    margin-top: 1rem;
+}

@@ -34,12 +34,14 @@ class EditCollection extends React.Component {
 
     handleDelete(accessToken) {
         Api.RemoveFromCollection(accessToken, this.state.controlToken).then((response) => {
-            let articles = this.state.collection.articles;
-            let filtered = articles.filter((value, index, arr) => {
-                return value.accessToken !== accessToken;
-            });
+            if (response.status === 200) {
+                let articles = this.state.collection.articles;
+                let filtered = articles.filter((value, index, arr) => {
+                    return value.accessToken !== accessToken;
+                });
 
-            this.setState({collection: {...this.state.collection, articles: filtered}})
+                this.setState({collection: {...this.state.collection, articles: filtered}});
+            }
         })
     }
 
@@ -115,6 +117,7 @@ function EditCollectionNewArticle(props) {
 
     return (
         <Dialog
+            onDismiss={props.onCancel}
             hidden={props.isHidden}
             dialogContentProps={{
                 type: DialogType.normal,
@@ -156,11 +159,14 @@ function EditCollectionItem(props) {
 
     return (
         <div className="collection-edit-item">
+
             <Text variant="xLarge" className="collection-edit-item-title">
                 {
-                    props.article.title.length < 30 ?
-                        props.article.title
-                        :props.article.title.substr(0, 27) + "..."
+                    props.article.title !== null ?
+                        props.article.title.length < 30 ?
+                            props.article.title
+                            :props.article.title.substr(0, 27) + "..."
+                        :"未命名"
                 }
             </Text>
             <PublishedDate className="collection-edit-item-date" date={props.article.publishedAt}/>

@@ -27,9 +27,7 @@ class Api {
     }
 
     static async RemoveFromCollection(accessToken, controlToken) {
-        return await fetch(this.apiUrl + "/api/collections/" + controlToken + "/" + accessToken, {
-            method: 'DELETE'
-        });
+        return await axios.delete(this.apiUrl + "/api/collections/" + controlToken + "/" + accessToken);
     }
 
     static async InsertArticleToCollection(accessToken, controlToken) {

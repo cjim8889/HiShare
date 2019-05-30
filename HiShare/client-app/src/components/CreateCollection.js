@@ -151,6 +151,7 @@ export function CollectionInfo(props) {
 
     return (
         <div className="collection-info">
+            <TextField label="名称" readOnly defaultValue={props.collection.name} />
             <TextField label="Access Token" readOnly defaultValue={props.collection.accessToken} />
             {
                 props.collection.controlToken ?
