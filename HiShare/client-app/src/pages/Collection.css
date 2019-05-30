@@ -12,3 +12,7 @@
 .collection-wrapper > *:first-child {
     margin-top: 1rem;
 }
+
+.collection-button-edit {
+    margin: 0;
+}
