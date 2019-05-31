@@ -3,10 +3,13 @@
 
     grid-template-columns: 1fr minmax(0, 5vw) 2fr minmax(0, 5vw) 1fr;
 
-    text-align: center;
+
 
 }
 
+.main-page > h1, .main-button-group, .main-introduction {
+    text-align: center;
+}
 
 .main-page > * {
     grid-column: 3 / 4;
@@ -27,12 +30,17 @@ h1 {
 }
 
 .main-button-group {
-
     margin: auto;
-
-    display: flex;
-    justify-content: center;
+    display: block;
     text-align: center;
+}
+
+.main-button-group > *:first-child {
+    margin-right: 1rem;
+}
+
+.main-button-group > * {
+    margin: 0 auto;
 }
 
 
