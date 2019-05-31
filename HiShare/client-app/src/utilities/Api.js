@@ -54,7 +54,15 @@ class Api {
             return [];
         }
     }
-    
+
+    static async GetPublicCollections(offset) {
+        return await axios.get(this.apiUrl + "/api/collections", {
+            params: {
+                offset: offset
+            }
+        });
+    }
+
     static async InsertComment(comment, accessToken, recaptchaToken) {
         return await axios.post(this.apiUrl + "/api/articles/" + accessToken + "/comment", {...comment}, {
             params: {

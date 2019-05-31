@@ -3,7 +3,7 @@ import "./Collection.css";
 import Api from "../utilities/Api";
 import { Redirect } from "react-router-dom";
 import { Text } from 'office-ui-fabric-react/lib/Text';
-import CollectionList from "../components/CollectionList";
+import CollectionArticlesList from "../components/CollectionList";
 import {
     DefaultButton,
     Dialog,
@@ -35,7 +35,7 @@ export default function Collection(props) {
                     collection.name
                 }
             </Text>
-            <CollectionList articles={collection.articles}/>
+            <CollectionArticlesList articles={collection.articles}/>
             <ToEditPage accessToken={collection.accessToken}/>
             {
                 invalidToken ?

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { List } from 'office-ui-fabric-react/lib/List';
 import { Separator } from 'office-ui-fabric-react/lib/Separator';
 import PublishedDate from "../components/PublishedDate";
-import {Icon} from "office-ui-fabric-react";
 
 function PostItem(props) {
     return (
@@ -25,10 +24,7 @@ function PostList(props) {
         )
     }
     return (
-        <div>
-            <Separator alignContent="center" className="separator"><Icon iconName="CaloriesAdd" styles={{root: { fontSize: "3rem"}}}/></Separator>
-            <List items={props.articles.filter(a => a.title)} className="postlist-wrapper" onRenderCell={onRenderCell} />
-        </div>
+        <List items={props.articles.filter(a => a.title)} className="postlist-wrapper" onRenderCell={onRenderCell} />
     )
 }
 

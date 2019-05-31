@@ -74,7 +74,7 @@ export default function CreateCollection(props) {
     }
     return (
         <div className="collection-new-controller">
-            <TextField label="标题" onChange={handleTextChange} required />
+            <TextField label="名称" onChange={handleTextChange} required />
             <Toggle
                 defaultChecked={isPublic}
                 label={
