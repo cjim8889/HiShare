@@ -11,18 +11,34 @@ import { CollectionList } from "../components/CollectionList";
 function Main(props) {
     const [articles, setArticles] = useState([]);
     const [collections, setCollections] = useState([]);
+    const [disabledArticles, setDisabledArticles] = useState(false);
+    const [articlesPage, setArticlePage] = useState(0);
 
     useEffect(() => {
-        Api.GetPublicArticles(0).then((response) => {
-            setArticles(response.data);
+        Api.GetPublicArticles(articlesPage * 30).then((response) => {
+            setArticles(a => {
+                return [...a, ...response.data];
+            });
         });
-    }, []);
+    }, [articlesPage]);
+
+    useEffect(() => {
+        if (articles.length === 30) {
+            setDisabledArticles(false);
+        } else {
+            setDisabledArticles(true);
+        }
+    }, [articles]);
 
     useEffect(() => {
         Api.GetPublicCollections(0).then((response) => {
             setCollections(response.data);
         });
     },[]);
+
+    function handleLoadArticles() {
+        setArticlePage(articlesPage + 1);
+    }
 
     return (
         <div className="main-page">
@@ -37,6 +53,9 @@ function Main(props) {
             <Pivot linkSize={PivotLinkSize.large} className="main-display">
                 <PivotItem headerText="文章">
                     <PostList articles={articles}/>
+                    <div className="main-page-more">
+                        <DefaultButton onClick={handleLoadArticles} disabled={disabledArticles}>加载更多</DefaultButton>
+                    </div>
                 </PivotItem>
                 <PivotItem headerText="Collections">
                     <CollectionList collections={collections}/>

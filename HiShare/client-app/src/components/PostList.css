@@ -28,6 +28,7 @@
 .postlist-wrapper {
     text-align: left;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .post-item > .post-published-date {
