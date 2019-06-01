@@ -2,7 +2,6 @@ import React from "react";
 import { List } from 'office-ui-fabric-react/lib/List';
 import { Separator } from 'office-ui-fabric-react/lib/Separator';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import CommentInterface from '../components/CommentInterface';
 import "./Comment.css";
 import PublishedDate from "../components/PublishedDate";
 
@@ -26,16 +25,10 @@ function CommentList(props) {
         )
     }
 
-
-
-    function handleNewComment(comment) {
-        props.handleNewComment(comment);
-    }
     return (
         <div className="comment-list">
             <Separator alignContent="center" className="separator"><Icon iconName="Comment" styles={{root: { fontSize: "3rem"}}}/></Separator>
             <List items={props.comments} onRenderCell={onRenderCell}/>
-            <CommentInterface accessToken={props.accessToken} onNew={handleNewComment} />
         </div>
     )
 }
