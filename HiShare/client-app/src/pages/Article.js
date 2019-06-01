@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import CommentList from "../components/Comment";
 import PublishedDate from "../components/PublishedDate";
 import "./Article.css";
@@ -8,39 +8,49 @@ import DOMPurify from "dompurify";
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { RenderMarkdown } from "../utilities/Markdown";
-class Article extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            article: {},
-            children: [],
-            accessToken: props.match.params.token,
-            invalidToken: false
-        };
+export default function Article(props) {
+    const [invalidToken, setInvalidToken] = useState(false);
+    const [article, setArticle] = useState({});
+    const [articleContent, setArticleContent] = useState([]);
 
-
-        this.rootNode = React.createRef();
-
-        this.composeContent = this.composeContent.bind(this);
-        this.handleNewComment = this.handleNewComment.bind(this);
-    }
-
-
-    async componentWillMount() {
-        let response = await Api.GetArticle(this.state.accessToken);
-
-        if (response === null || response === undefined) {
-            this.setState({invalidToken: true});
-        } else {
+    useEffect(() => {
+        Api.GetArticle(props.match.params.token).then((response) => {
             let article = {...response.data, content: JSON.parse(response.data.content)};
-            this.setState({article: article}, () => {
-                this.setState({children: this.composeContent()}, () => {});
-            })
+            setArticle(article);
+        }).catch((err) => {
+            console.log(err);
+            setInvalidToken(true);
+        });
+    }, [props.match.params.token]);
+
+    const composeArticleContent = useCallback(() => {
+        let children = [];
+
+        let key = 1;
+        if (article.content != null) {
+            article.content.forEach((block) => {
+
+                let doc = renderElement(block, key);
+                key += 1;
+                children.push(doc);
+            });
         }
+
+        return children;
+    }, [article.content]);
+
+    useEffect(() => {
+        let children = composeArticleContent();
+        setArticleContent(children);
+    }, [article, composeArticleContent]);
+
+    function handleNewComment(comment) {
+        setArticle({...article, comments: [...article.comments, comment]});
     }
 
-    static renderElement(block, key) {
+
+    function renderElement(block, key) {
 
         let purifiedText, doc;
 
@@ -49,14 +59,12 @@ class Article extends React.Component {
         }
 
         if (block.type === "header") {
-
             doc = React.createElement(`h${block.data.level}`, {
                 key: key,
                 dangerouslySetInnerHTML: {
                     __html: purifiedText
                 }
             });
-
         } else if (block.type === "paragraph") {
 
             doc = <p key={key.toString()} dangerouslySetInnerHTML={{__html: purifiedText}} />
@@ -74,49 +82,44 @@ class Article extends React.Component {
 
         } else if (block.type === "code") {
             doc = (
-                <SyntaxHighlighter className="code-block" key={key.toString()} showLineNumbers={true} language={block.data.language ? block.data.language : "plaintext"} style={docco}>{block.data.code}</SyntaxHighlighter>
+                <SyntaxHighlighter className="article-code-block" key={key.toString()} showLineNumbers={true} language={block.data.language ? block.data.language : "plaintext"} style={docco}>{block.data.code}</SyntaxHighlighter>
             );
         } else if (block.type === "markdown") {
             doc = RenderMarkdown(block.data.markdown, key);
+        } else if (block.type === "list") {
+            console.log(block);
+            if (block.data.style === "ordered") {
+                doc = (
+                    <ol key={key.toString()}>
+                        {block.data.items.map((item, index) => {
+                            return <li key={index.toString()} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(item)}} />;
+                        })}
+                    </ol>
+                );
+            } else {
+                doc = (
+                    <ul key={key.toString()}>
+                        {block.data.items.map((item, index) => {
+                            return <li key={index.toString()} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(item)}} />;
+                        })}
+                    </ul>
+                );
+            }
         }
 
         return doc;
     }
 
-    composeContent() {
-        const children = [];
-
-        let key = 1;
-        if (this.state.article.content != null) {
-            this.state.article.content.forEach((block) => {
-
-                let doc = Article.renderElement(block, key);
-                key += 1;
-                children.push(doc);
-            });
-        }
-
-        return children;
-    }
-
-    handleNewComment(comment) {
-        this.setState({article: {...this.state.article, comments: [...this.state.article.comments, comment]}});
-    }
-
-    render() {
-        return (
-            <div className="article-page" ref={this.rootNode} >
-                {this.state.children}
-                <PublishedDate key="published-date" date={this.state.article.publishedAt} />
-                <CommentList handleNewComment={this.handleNewComment} accessToken={this.state.accessToken} key="comment" comments={this.state.article.comments ? this.state.article.comments : []} />
-                {
-                    this.state.invalidToken ?
-                        <Redirect to="/404"/>
-                        : null
-                }
-            </div>
-        )
-    }
+    return (
+        <div className="article-page">
+            {articleContent}
+            <PublishedDate key="published-date" date={article.publishedAt} />
+            <CommentList handleNewComment={handleNewComment} accessToken={props.accessToken} key="comment" comments={article.comments ? article.comments : []} />
+            {
+                invalidToken ?
+                    <Redirect to="/404"/>
+                    : null
+            }
+        </div>
+    )
 }
-
-export default Article;
