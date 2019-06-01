@@ -8,6 +8,7 @@ import DOMPurify from "dompurify";
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { RenderMarkdown } from "../utilities/Markdown";
+import CommentInterface from "../components/CommentInterface";
 
 export default function Article(props) {
     const [invalidToken, setInvalidToken] = useState(false);
@@ -115,6 +116,7 @@ export default function Article(props) {
             {articleContent}
             <PublishedDate key="published-date" date={article.publishedAt} />
             <CommentList handleNewComment={handleNewComment} accessToken={props.match.params.token} key="comment" comments={article.comments ? article.comments : []} />
+            <CommentInterface accessToken={props.match.params.token} onNew={handleNewComment} />
             {
                 invalidToken ?
                     <Redirect to="/404"/>

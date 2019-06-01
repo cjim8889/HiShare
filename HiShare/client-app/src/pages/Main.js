@@ -11,22 +11,55 @@ import { CollectionList } from "../components/CollectionList";
 function Main(props) {
     const [articles, setArticles] = useState([]);
     const [collections, setCollections] = useState([]);
+    const [disabledArticles, setDisabledArticles] = useState(false);
+    const [disabledCollections, setDisabledCollections] = useState(false);
+    const [articlesPage, setArticlePage] = useState(0);
+    const [collectionsPage, setCollectionsPage] = useState(0);
 
     useEffect(() => {
-        Api.GetPublicArticles(0).then((response) => {
-            setArticles(response.data);
+        Api.GetPublicArticles(articlesPage * 30).then((response) => {
+            setArticles(a => {
+                return [...a, ...response.data];
+            });
         });
-    }, []);
+    }, [articlesPage]);
 
     useEffect(() => {
-        Api.GetPublicCollections(0).then((response) => {
-            setCollections(response.data);
+        Api.GetPublicCollections(collectionsPage * 30).then((response) => {
+            setCollections(c => {
+                return [...c, ...response.data];
+            });
         });
-    },[]);
+    },[collectionsPage]);
+
+    useEffect(() => {
+        console.log(articles);
+        if (articles.length % 30 !== 0) {
+            setDisabledArticles(true);
+        } else {
+            setDisabledArticles(false);
+        }
+
+        if (collections.length % 30 !== 0) {
+            setDisabledCollections(true);
+        } else {
+            setDisabledCollections(false);
+        }
+    }, [articles, collections]);
+
+
+
+    function handleLoadArticles() {
+        setArticlePage(articlesPage + 1);
+    }
+
+    function handleLoadCollections() {
+        setCollectionsPage(collectionsPage + 1);
+    }
 
     return (
         <div className="main-page">
-            <h1>HiShare</h1>
+            <Text block variant={"xxLarge"} as="h1">HiShare</Text>
             <Text variant={"large"} block className="main-introduction">
                 这是一个简单的文字分享平台，任何人都可以分享和评论并且完全匿名。
             </Text>
@@ -37,9 +70,15 @@ function Main(props) {
             <Pivot linkSize={PivotLinkSize.large} className="main-display">
                 <PivotItem headerText="文章">
                     <PostList articles={articles}/>
+                    <div className="main-page-more">
+                        <DefaultButton onClick={handleLoadArticles} disabled={disabledArticles}>加载更多</DefaultButton>
+                    </div>
                 </PivotItem>
                 <PivotItem headerText="Collections">
                     <CollectionList collections={collections}/>
+                    <div className="main-page-more">
+                        <DefaultButton onClick={handleLoadCollections} disabled={disabledCollections}>加载更多</DefaultButton>
+                    </div>
                 </PivotItem>
             </Pivot>
         </div>
