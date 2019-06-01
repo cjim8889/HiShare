@@ -117,7 +117,6 @@ export default function Article(props) {
             <PublishedDate key="published-date" date={article.publishedAt} />
             <CommentList handleNewComment={handleNewComment} accessToken={props.match.params.token} key="comment" comments={article.comments ? article.comments : []} />
             <CommentInterface accessToken={props.match.params.token} onNew={handleNewComment} />
-
             {
                 invalidToken ?
                     <Redirect to="/404"/>
