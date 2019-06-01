@@ -59,7 +59,7 @@ function Main(props) {
 
     return (
         <div className="main-page">
-            <h1>HiShare</h1>
+            <Text block variant={"xxLarge"} as="h1">HiShare</Text>
             <Text variant={"large"} block className="main-introduction">
                 这是一个简单的文字分享平台，任何人都可以分享和评论并且完全匿名。
             </Text>
