@@ -45,6 +45,6 @@ export function CollectionList(props) {
     }
 
     return (
-        <List className="collection-list-wrapper" items={props.collections ? props.collections : []} onRenderCell={onRenderCell}/>
+        <List className="collection-list-wrapper" items={props.collections ? props.collections.filter(c => c.articles.length) : []} onRenderCell={onRenderCell}/>
     )
 }

@@ -34,12 +34,8 @@ class Api {
         return await axios.get(this.apiUrl + "/api/collections/" + controlToken + "/" + accessToken);
     }
 
-    static async GetArticle(accessToken) {
-        try {
-            return await axios.get(this.apiUrl + "/api/articles/" + accessToken);
-        } catch (e) {
-            return null;
-        }
+    static GetArticle(accessToken) {
+        return axios.get(this.apiUrl + "/api/articles/" + accessToken);
     }
 
     static async GetPublicArticles(offset) {
