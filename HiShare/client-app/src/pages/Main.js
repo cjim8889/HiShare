@@ -12,7 +12,9 @@ function Main(props) {
     const [articles, setArticles] = useState([]);
     const [collections, setCollections] = useState([]);
     const [disabledArticles, setDisabledArticles] = useState(false);
+    const [disabledCollections, setDisabledCollections] = useState(false);
     const [articlesPage, setArticlePage] = useState(0);
+    const [collectionsPage, setCollectionsPage] = useState(0);
 
     useEffect(() => {
         Api.GetPublicArticles(articlesPage * 30).then((response) => {
@@ -23,21 +25,36 @@ function Main(props) {
     }, [articlesPage]);
 
     useEffect(() => {
-        if (articles.length === 30) {
-            setDisabledArticles(false);
-        } else {
-            setDisabledArticles(true);
-        }
-    }, [articles]);
+        Api.GetPublicCollections(collectionsPage * 30).then((response) => {
+            setCollections(c => {
+                return [...c, ...response.data];
+            });
+        });
+    },[collectionsPage]);
 
     useEffect(() => {
-        Api.GetPublicCollections(0).then((response) => {
-            setCollections(response.data);
-        });
-    },[]);
+        console.log(articles);
+        if (articles.length % 30 !== 0) {
+            setDisabledArticles(true);
+        } else {
+            setDisabledArticles(false);
+        }
+
+        if (collections.length % 30 !== 0) {
+            setDisabledCollections(true);
+        } else {
+            setDisabledCollections(false);
+        }
+    }, [articles, collections]);
+
+
 
     function handleLoadArticles() {
         setArticlePage(articlesPage + 1);
+    }
+
+    function handleLoadCollections() {
+        setCollectionsPage(collectionsPage + 1);
     }
 
     return (
@@ -59,6 +76,9 @@ function Main(props) {
                 </PivotItem>
                 <PivotItem headerText="Collections">
                     <CollectionList collections={collections}/>
+                    <div className="main-page-more">
+                        <DefaultButton onClick={handleLoadCollections} disabled={disabledCollections}>加载更多</DefaultButton>
+                    </div>
                 </PivotItem>
             </Pivot>
         </div>
