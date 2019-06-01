@@ -114,7 +114,7 @@ export default function Article(props) {
         <div className="article-page">
             {articleContent}
             <PublishedDate key="published-date" date={article.publishedAt} />
-            <CommentList handleNewComment={handleNewComment} accessToken={props.accessToken} key="comment" comments={article.comments ? article.comments : []} />
+            <CommentList handleNewComment={handleNewComment} accessToken={props.match.params.token} key="comment" comments={article.comments ? article.comments : []} />
             {
                 invalidToken ?
                     <Redirect to="/404"/>
