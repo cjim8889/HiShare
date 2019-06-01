@@ -54,7 +54,7 @@ class PublishArticle extends React.Component {
     }
 
     handleEditorChange() {
-        this.state.editorInstance.save().then(output => {
+        return this.state.editorInstance.save().then(output => {
             this.setState({blocks: output.blocks});
             localStorage.setItem("blocks", JSON.stringify(output.blocks));
         });
