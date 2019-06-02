@@ -2,6 +2,7 @@ import React from "react";
 import "./NewCollection.css";
 import CreateCollection, { CollectionInfo } from "../components/CreateCollection";
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react';
+import { Text } from "office-ui-fabric-react/lib/Text";
 import { Redirect } from "react-router-dom";
 
 
@@ -40,7 +41,7 @@ class NewCollection extends React.Component {
     render() {
         return (
             <div className="collection-new-main">
-                <h1>新建Collection</h1>
+                <Text variant="xxLarge" block as="h1">新建Collection</Text>
                 {
                     Object.keys(this.state.collection).length === 0 ?
                         <CreateCollection handleNew={this.handleNew}/>

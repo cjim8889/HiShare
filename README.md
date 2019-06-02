@@ -1,7 +1,7 @@
 # HiShare
 HiShare, Anyone can share
 
-[![](https://img.shields.io/badge/version-0.0.5-blue.svg)]()
+[![](https://img.shields.io/badge/version-0.0.6-blue.svg)]()
 [![Netlify Status](https://api.netlify.com/api/v1/badges/88d7032b-d5e1-4d85-a2c2-fe778687ac0d/deploy-status)](https://app.netlify.com/sites/laughing-turing-d49777/deploys)
 [![Backend Build Status](https://dev.azure.com/oxifus/wuhaochen/_apis/build/status/cjim8889.HiShare?branchName=master)](https://dev.azure.com/oxifus/wuhaochen/_build/latest?definitionId=5&branchName=master)
 

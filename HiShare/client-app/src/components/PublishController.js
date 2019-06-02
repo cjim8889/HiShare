@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CompoundButton } from 'office-ui-fabric-react/lib/Button';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
@@ -9,12 +8,11 @@ import Recaptcha from 'react-recaptcha';
 
 
 function PublishController(props) {
-    //eslint-disable-next-line
     const [isPublic, setIsPublic] = useState(true);
-    const [title, setTitle] = useState(null);
-    const [titleError, settE] = useState(null);
+    const [disabled, setDisabled] = useState(true);
 
     function handleRecaptcha(token) {
+        setDisabled(false);
         props.handleRecaptcha(token);
     }
 
@@ -23,31 +21,13 @@ function PublishController(props) {
     }
 
     function handlePublish() {
-        if (isPublic && !title) {
-            settE("公开文章标题不得为空");
-            return;
-        }
-
-        if (isPublic && title.length > 40) {
-            settE("文章标题不得大于40字");
-            return;
-        }
-
         props.handlePublish({
-            isPublic: isPublic,
-            title: title
+            isPublic: isPublic
         });
     }
 
-    function handleTitleInput(e, value) {
-        setTitle(value);
 
-        if(value) {
-            settE(null);
-        } else {
-            settE("公开文章标题不得为空");
-        }
-    }
+
 
     return (
         <div className="button-group">
@@ -71,13 +51,8 @@ function PublishController(props) {
                 offText="私密"
                 onChange={handleToggle}
             />
-            {
-                isPublic ?
-                    <TextField label="标题" required onChange={handleTitleInput} errorMessage={titleError} />
-                    :null
-            }
             <div className="command-group">
-                <CompoundButton secondaryText="匿名发布文章" primary={true} onClick={handlePublish}>
+                <CompoundButton disabled={disabled} secondaryText="匿名发布文章" primary={true} onClick={handlePublish}>
                     发布
                 </CompoundButton>
                 <CompoundButton secondaryText="清空文章" onClick={props.handleClear}>

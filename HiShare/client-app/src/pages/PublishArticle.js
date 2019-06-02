@@ -38,14 +38,14 @@ class PublishArticle extends React.Component {
                     {
                         type: "header",
                         data: {
-                            text: "你好世界...",
+                            text: "标题...",
                             level: 1
                         }
                     },
                     {
                         type: "paragraph",
                         data: {
-                            text: "...",
+                            text: "正文...",
                         }
                     }
                 ]
@@ -54,7 +54,7 @@ class PublishArticle extends React.Component {
     }
 
     handleEditorChange() {
-        this.state.editorInstance.save().then(output => {
+        return this.state.editorInstance.save().then(output => {
             this.setState({blocks: output.blocks});
             localStorage.setItem("blocks", JSON.stringify(output.blocks));
         });
@@ -62,6 +62,16 @@ class PublishArticle extends React.Component {
 
     handleEditor(editor) {
         this.setState({editorInstance: editor});
+    }
+
+    getTitle(blocks) {
+        for (let b in blocks) {
+            if (blocks[b].type === "header") {
+                return blocks[b].data.text;
+            }
+        }
+
+        return "";
     }
 
     async handlePublish(object) {
@@ -72,8 +82,15 @@ class PublishArticle extends React.Component {
             return;
         }
 
+        let title = this.getTitle(this.state.blocks);
+
+        if (title.trim().length === 0) {
+            this.setState({ publishError: true} );
+            return;
+        }
+
         let article = {
-            ...object,
+            ...{...object, title: title},
             content: JSON.stringify(this.state.blocks),
         };
 
@@ -111,7 +128,7 @@ class PublishArticle extends React.Component {
                 {
                     this.state.publishError ?
                         <MessageBar messageBarType={MessageBarType.error} isMultiline={false} dismissButtonAriaLabel="Close">
-                            发布文章失败,请检查是否文章为空或默认值或标题长度超过40个字符
+                            发布文章失败,请检查是否文章为空或标题为空或长度超过40个字符
                         </MessageBar>
                         : null
                 }

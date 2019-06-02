@@ -33,7 +33,6 @@ function Main(props) {
     },[collectionsPage]);
 
     useEffect(() => {
-        console.log(articles);
         if (articles.length % 30 !== 0) {
             setDisabledArticles(true);
         } else {
