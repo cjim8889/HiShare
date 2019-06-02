@@ -6,6 +6,13 @@
 
 .collection-new-main > * {
     grid-column: 3 / 4;
+
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.collection-new-main > *:first-child {
+    margin-top: 1rem;
 }
 
 .collection-new-button-group {
