@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CompoundButton } from 'office-ui-fabric-react/lib/Button';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
@@ -9,8 +9,10 @@ import Recaptcha from 'react-recaptcha';
 
 function PublishController(props) {
     const [isPublic, setIsPublic] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
     function handleRecaptcha(token) {
+        setDisabled(false);
         props.handleRecaptcha(token);
     }
 
@@ -23,6 +25,8 @@ function PublishController(props) {
             isPublic: isPublic
         });
     }
+
+
 
 
     return (
@@ -48,7 +52,7 @@ function PublishController(props) {
                 onChange={handleToggle}
             />
             <div className="command-group">
-                <CompoundButton secondaryText="匿名发布文章" primary={true} onClick={handlePublish}>
+                <CompoundButton disabled={disabled} secondaryText="匿名发布文章" primary={true} onClick={handlePublish}>
                     发布
                 </CompoundButton>
                 <CompoundButton secondaryText="清空文章" onClick={props.handleClear}>
